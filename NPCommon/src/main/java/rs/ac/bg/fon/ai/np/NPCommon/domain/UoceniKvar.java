@@ -47,8 +47,6 @@ public class UoceniKvar extends DomenskiObjekat implements Serializable{
     public void setAutomobil(Automobil automobil) {
     	if(automobil==null)
     		throw new NullPointerException("Automobil kod uocenog kvara ne sme biti null!");
-    	if(!(automobil instanceof Automobil))
-    		throw new IllegalArgumentException("Automobil kod uocenog kvara nije istanca klase Automobil!");
         this.automobil = automobil;
     }
 
