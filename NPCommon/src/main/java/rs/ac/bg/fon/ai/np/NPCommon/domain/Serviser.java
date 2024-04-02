@@ -80,6 +80,9 @@ public class Serviser extends DomenskiObjekat implements Serializable {
     }
 
     public void setServiserID(int serviserID) {
+    	if(serviserID<0) {
+    		throw new IllegalArgumentException("serviserID ne sme biti < 0");
+    	}
         this.serviserID = serviserID;
     }
 
@@ -88,6 +91,10 @@ public class Serviser extends DomenskiObjekat implements Serializable {
     }
 
     public void setIme(String ime) {
+    	if(ime == null) 
+    		throw new NullPointerException("Ime servisera ne sme biti null");
+    	if(ime.isEmpty())
+    		throw new IllegalArgumentException("Ime servisera ne sme biti prazan string!");
         this.ime = ime;
     }
 
@@ -96,6 +103,10 @@ public class Serviser extends DomenskiObjekat implements Serializable {
     }
 
     public void setPrezime(String prezime) {
+    	if(prezime == null) 
+    		throw new NullPointerException("Prezime servisera ne sme biti null");
+    	if(prezime.isEmpty())
+    		throw new IllegalArgumentException("Prezime servisera ne sme biti prazan string!");
         this.prezime = prezime;
     }
 
@@ -104,6 +115,10 @@ public class Serviser extends DomenskiObjekat implements Serializable {
     }
 
     public void setUsername(String username) {
+    	if(username== null) 
+    		throw new NullPointerException("Username servisera ne sme biti null!");
+    	if(username.isEmpty())
+    		throw new IllegalArgumentException("Username servisera ne sme biti prazan string");
         this.username = username;
     }
 
@@ -112,6 +127,10 @@ public class Serviser extends DomenskiObjekat implements Serializable {
     }
 
     public void setPassword(String password) {
+    	if(password== null) 
+    		throw new NullPointerException("Password servisera ne sme biti null!");
+    	if(password.isEmpty())
+    		throw new IllegalArgumentException("Password servisera ne sme biti prazan string");
         this.password = password;
     }
 

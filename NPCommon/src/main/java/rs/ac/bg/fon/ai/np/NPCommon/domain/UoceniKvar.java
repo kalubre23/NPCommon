@@ -33,6 +33,10 @@ public class UoceniKvar extends DomenskiObjekat implements Serializable{
     }
 
     public void setOpis(String opis) {
+    	if(opis == null)
+    		throw new NullPointerException("Opis kvara ne sme biti null!");
+    	if(opis.isEmpty())
+    		throw new IllegalArgumentException("Opis kvara je prazan string!");
         this.opis = opis;
     }
 
@@ -41,6 +45,10 @@ public class UoceniKvar extends DomenskiObjekat implements Serializable{
     }
 
     public void setAutomobil(Automobil automobil) {
+    	if(automobil==null)
+    		throw new NullPointerException("Automobil kod uocenog kvara ne sme biti null!");
+    	if(!(automobil instanceof Automobil))
+    		throw new IllegalArgumentException("Automobil kod uocenog kvara nije istanca klase Automobil!");
         this.automobil = automobil;
     }
 
@@ -49,6 +57,8 @@ public class UoceniKvar extends DomenskiObjekat implements Serializable{
     }
 
     public void setKvarID(int kvarID) {
+    	if(kvarID<0)
+    		throw new IllegalArgumentException("KvarID kod uocenog kvara ne sme biti < 0");
         this.kvarID = kvarID;
     }
 

@@ -34,6 +34,12 @@ public class Marka extends DomenskiObjekat implements Serializable{
     }
 
     public void setNaziv(String naziv) {
+    	if(naziv==null) {
+    		throw new NullPointerException("Naziv marke ne moze biti null");
+    	}
+    	if(naziv.isEmpty()) {
+    		throw new IllegalArgumentException("Naziv marke ne moze biti prazan string");
+    	}
         this.naziv = naziv;
     }
 
@@ -42,6 +48,8 @@ public class Marka extends DomenskiObjekat implements Serializable{
     }
 
     public void setMarkaID(int markaID) {
+    	if(markaID<0)
+    		throw new IllegalArgumentException("MarkaID ne sme biti null");
         this.markaID = markaID;
     }
 

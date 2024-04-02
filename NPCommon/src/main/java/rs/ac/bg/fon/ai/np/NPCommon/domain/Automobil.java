@@ -41,6 +41,9 @@ public class Automobil extends DomenskiObjekat implements Serializable{
     }
 
     public void setMarka(Marka marka) {
+    	if(!(marka instanceof Marka)) {
+    		throw new IllegalArgumentException("Promenljiva marka nije klase Marka");
+    	}
         this.marka = marka;
     }
 
@@ -49,6 +52,10 @@ public class Automobil extends DomenskiObjekat implements Serializable{
     }
 
     public void setTablice(String tablice) {
+    	if(tablice==null) {
+    		throw new NullPointerException("Tablice ne mogu biti null");
+    	}
+    	
         this.tablice = tablice;
     }
 
@@ -57,6 +64,10 @@ public class Automobil extends DomenskiObjekat implements Serializable{
     }
 
     public void setImePrezimeVlasnika(String imePrezimeVlasnika) {
+    	if(imePrezimeVlasnika==null) {
+    		throw new NullPointerException("Ime i prezime ne mogu biti null");
+    	}
+    	
         this.imePrezimeVlasnika = imePrezimeVlasnika;
     }
 
@@ -65,6 +76,9 @@ public class Automobil extends DomenskiObjekat implements Serializable{
     }
 
     public void setGodiste(int godiste) {
+    	if(godiste < 1900) {
+    		throw new IllegalArgumentException("Godiste ne sme biti manje od 1900");
+    	}
         this.godiste = godiste;
     }
 
@@ -73,6 +87,8 @@ public class Automobil extends DomenskiObjekat implements Serializable{
     }
 
     public void setUoceniKvarovi(List<UoceniKvar> uoceniKvarovi) {
+    	if(uoceniKvarovi==null)
+    		throw new NullPointerException("Uoceni kvarovi za automobil ne mogu biti null");
         this.uoceniKvarovi = uoceniKvarovi;
     }
 
@@ -87,7 +103,6 @@ public class Automobil extends DomenskiObjekat implements Serializable{
             return false;
         if(obj == null)
             return false;
-        
         return (((Automobil)obj).getTablice().equals(this.tablice));
     }
 

@@ -34,6 +34,12 @@ public class DeoAutomobila extends DomenskiObjekat implements Serializable{
     }
 
     public void setNaziv(String naziv) {
+    	if(naziv==null) {
+    		throw new NullPointerException("Naziv dela ne moze biti null");
+    	}
+    	if(naziv.isEmpty()) {
+    		throw new IllegalArgumentException("Naziv dela ne moze biti prazan string");
+    	}
         this.naziv = naziv;
     }
 
@@ -42,6 +48,8 @@ public class DeoAutomobila extends DomenskiObjekat implements Serializable{
     }
 
     public void setDeoID(int deoID) {
+    	if(deoID < 0)
+    		throw new IllegalArgumentException("DeoID ne sme biti < 0");
         this.deoID = deoID;
     }
 
