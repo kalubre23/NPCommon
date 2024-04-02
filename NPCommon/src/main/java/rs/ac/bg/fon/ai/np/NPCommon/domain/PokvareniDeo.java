@@ -54,8 +54,7 @@ public class PokvareniDeo extends DomenskiObjekat implements Serializable {
     public void setUoceniKvar(UoceniKvar uoceniKvar) {
     	if(uoceniKvar == null)
     		throw new NullPointerException("Uoceni kvar za pokvareni deo ne sme biti null!");
-    	if(!(uoceniKvar instanceof UoceniKvar))
-    		throw new IllegalArgumentException("uoceni kvar nije instanca klase UoceniKvar kod pokvarenog dela!");
+    	
         this.uoceniKvar = uoceniKvar;
     }
 
@@ -66,8 +65,6 @@ public class PokvareniDeo extends DomenskiObjekat implements Serializable {
     public void setDeo(DeoAutomobila deo) {
     	if(deo == null)
     		throw new NullPointerException("Deo automobila kod pokvarenog dela ne sme biti null!");
-    	if(!(deo instanceof DeoAutomobila))
-    		throw new IllegalArgumentException("Deo automobila kod pokvarenog dela nije instanca klase DeoAutomobila!");
         this.deo = deo;
     }
 
@@ -80,10 +77,10 @@ public class PokvareniDeo extends DomenskiObjekat implements Serializable {
 
     @Override
     public boolean equals(Object obj) {
+    	if (obj == null) {
+    		return false;
+    	}
         if (!(obj instanceof PokvareniDeo)) {
-            return false;
-        }
-        if (obj == null) {
             return false;
         }
         PokvareniDeo pd = ((PokvareniDeo) obj);
