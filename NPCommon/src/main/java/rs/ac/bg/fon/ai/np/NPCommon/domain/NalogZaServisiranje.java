@@ -46,9 +46,6 @@ public class NalogZaServisiranje extends DomenskiObjekat implements Serializable
     	if(serviser==null) {
     		throw new NullPointerException("Serviser ne moze biti null");
     	}
-    	if(!(serviser instanceof Serviser)) {
-    		throw new IllegalArgumentException("serviser ne pripada klasi Serviser");
-    	}
         this.serviser = serviser;
     }
 
@@ -59,8 +56,6 @@ public class NalogZaServisiranje extends DomenskiObjekat implements Serializable
     public void setKvar(UoceniKvar kvar) {
     	if(kvar == null)
     		throw new NullPointerException("Kvar kod naloga ne sme biti null!");
-    	if(!(kvar instanceof UoceniKvar))
-    		throw new IllegalArgumentException("Kvar instanca nije klase Uoceni kvar kod naloga!");
         this.kvar = kvar;
     }
 
@@ -79,10 +74,10 @@ public class NalogZaServisiranje extends DomenskiObjekat implements Serializable
     }
 
     public void setDatum(LocalDate datum) {
-    	if(datum != LocalDate.now())
-    		throw new IllegalArgumentException("Datum naloga nije sadasnji trenutak!");
     	if(datum == null)
     		throw new NullPointerException("Datum naloga ne sme biti null!");
+    	if(datum != LocalDate.now())
+    		throw new IllegalArgumentException("Datum naloga nije sadasnji trenutak!");
         this.datum = datum;
     }
 
