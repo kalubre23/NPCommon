@@ -139,7 +139,6 @@ public class Automobil extends DomenskiObjekat implements Serializable{
 
     @Override
     public List<DomenskiObjekat> vratiListuSvih(ResultSet rs) {
-        System.out.println("DAL JEBENO UDJE UOPSTE U OVU METODU!!!!!");
         try {
             List<DomenskiObjekat> automobili = new ArrayList<>();
             while (rs.next()){
@@ -149,7 +148,7 @@ public class Automobil extends DomenskiObjekat implements Serializable{
                 auto.setImePrezimeVlasnika(rs.getString(2));
                 auto.setGodiste(rs.getInt(3));
                 auto.setMarka(new Marka(rs.getInt(4), rs.getString(5)));
-                auto.setUoceniKvarovi(null);
+                auto.setUoceniKvarovi(new ArrayList<>());
                 automobili.add(auto);
                 System.out.println(auto.toString());
             }
