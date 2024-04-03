@@ -112,12 +112,11 @@ public class NalogZaServisiranje extends DomenskiObjekat implements Serializable
 
     @Override
     public String vratiNazivTabele() {
-        return this.cena == 0 ? """
-                                nalog AS n
-                                INNER JOIN automobil AS a ON a.tablice=n.tablice
-                                INNER JOIN marka AS m ON a.markaid=m.markaid
-                                INNER JOIN uocenikvar AS uk ON n.kvarid=uk.kvarid
-                                INNER JOIN serviseri AS s ON n.serviserid=s.serviserid """ : "nalog";
+        return this.cena == 0 ? "nalog AS n"+
+                                "INNER JOIN automobil AS a ON a.tablice=n.tablice"+
+                                "INNER JOIN marka AS m ON a.markaid=m.markaid"+
+                                "INNER JOIN uocenikvar AS uk ON n.kvarid=uk.kvarid"+
+                                "INNER JOIN serviseri AS s ON n.serviserid=s.serviserid" : "nalog";
     }
 
     @Override
