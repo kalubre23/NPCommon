@@ -41,9 +41,8 @@ public class Automobil extends DomenskiObjekat implements Serializable{
     }
 
     public void setMarka(Marka marka) {
-    	if(!(marka instanceof Marka)) {
-    		throw new IllegalArgumentException("Promenljiva marka nije klase Marka");
-    	}
+    	if(marka==null)
+    		throw new NullPointerException("Marka ne moze biti null!");
         this.marka = marka;
     }
 
