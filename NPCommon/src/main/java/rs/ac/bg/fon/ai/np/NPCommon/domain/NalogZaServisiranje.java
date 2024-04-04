@@ -76,8 +76,8 @@ public class NalogZaServisiranje extends DomenskiObjekat implements Serializable
     public void setDatum(LocalDate datum) {
     	if(datum == null)
     		throw new NullPointerException("Datum naloga ne sme biti null!");
-    	if(datum != LocalDate.now())
-    		throw new IllegalArgumentException("Datum naloga nije sadasnji trenutak!");
+    	if(datum.isAfter(LocalDate.now()))
+    		throw new IllegalArgumentException("Datum naloga ne sme da bude u buducnosti!");
         this.datum = datum;
     }
 

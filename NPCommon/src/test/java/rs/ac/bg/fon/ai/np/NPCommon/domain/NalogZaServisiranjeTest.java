@@ -74,9 +74,9 @@ class NalogZaServisiranjeTest {
 	}
 	
 	@Test
-	@DisplayName ("Testira da li je uneseni datum naloga drugaciji od sadasnjeg")
-	void testSetDatumDrugaciji() {
-		assertThrows(IllegalArgumentException.class, ()->n.setDatum(LocalDate.of(2000, 6, 27)));
+	@DisplayName ("Testira da li je uneseni datum u buducnosti")
+	void testSetDatumBuducnost() {
+		assertThrows(IllegalArgumentException.class, ()->n.setDatum(LocalDate.of(2033, 6, 27)));
 	}
 	
 	@Test
