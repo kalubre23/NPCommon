@@ -14,19 +14,50 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
+ * Predstavlja automobil.
+ * 
+ * Automobil ima broj registarskih tablica, ime i prezime vlasnika, 
+ * godiste, marku i listu uocenih kvarova za taj automobil.
  *
- * @author Asus
+ * @author Luka Obrenic
+ * @since 1.0.0
  */
 public class Automobil extends DomenskiObjekat implements Serializable{
+	/**
+	 * Tablice automobila kao string.
+	 */
     private String tablice;
+    /**
+     * Ime i prezime vlasnika kao string.
+     */
     private String imePrezimeVlasnika;
+    /**
+     * Godiste automobila kao int.
+     */
     private int godiste;
+    /**
+     * Marka automobila tipa Marka.
+     */
     private Marka marka;
+    /**
+     * Lista uocenih kvarova vezanih za jedan automobil.
+     */
     private List<UoceniKvar> uoceniKvarovi;
 
+    /**
+     * Prazan konstruktor za kreiranje jedne instance automobila sa podrazumevanim vrednostima za njegove atribute.
+     */
     public Automobil() {
     }
 
+    /**
+     * Parametrizovani konstruktor koji sluzi za kreiranje instance automobila sa specificnim vrednostima za njegove atribute.
+     * @param tablice - Broj tablica koji se dodeljuje instanci automobila pri kreiranju.
+     * @param imePrezimeVlasnika - Ime i prezime vlasnika koji se dodeljuje instanci automobila pri kreiranju.
+     * @param godiste - Godiste automobila koje se dodeljuje instanci automobila pri kreiranju.
+     * @param marka - Marka automobila koja se dodeljuje instanci automobila pri kreiranju.
+     * @param uoceniKvarovi - Lista uocenih kvarova automobila koja se dodeljuje instanci automobila pri kreiranju.
+     */
     public Automobil(String tablice, String imePrezimeVlasnika, int godiste, Marka marka, List<UoceniKvar> uoceniKvarovi) {
         this.tablice = tablice;
         this.imePrezimeVlasnika = imePrezimeVlasnika;
@@ -35,21 +66,40 @@ public class Automobil extends DomenskiObjekat implements Serializable{
         this.uoceniKvarovi = uoceniKvarovi;
     }
 
-    
+    /**
+     * Vraca marku automobila.
+     * @return marka automobila tipa Marka.
+     */
     public Marka getMarka() {
         return marka;
     }
 
+    /**
+     * Postavlja novu vrednost za marku.
+     * 
+     * @param marka kao nova vrednost atributa marka.
+     * @throws NullPointerException ako je uneta vrednost null.
+     */
     public void setMarka(Marka marka) {
     	if(marka==null)
     		throw new NullPointerException("Marka ne moze biti null!");
         this.marka = marka;
     }
 
+    /**
+     * Vraca tablice automobila.
+     * @return tablice automobila kao string.
+     */
     public String getTablice() {
         return tablice;
     }
 
+    /**
+     * Postavlja novu vrednost za tablice automobila.
+     * 
+     * @param tablice kao nova vrednost atributa tablice.
+     * @throws NullPointerException ako je uneta vrednost null.
+     */
     public void setTablice(String tablice) {
     	if(tablice==null) {
     		throw new NullPointerException("Tablice ne mogu biti null");
@@ -58,10 +108,20 @@ public class Automobil extends DomenskiObjekat implements Serializable{
         this.tablice = tablice;
     }
 
+    /**
+     * Vraca ime i prezime vlasnika automobila.
+     * @return imePrezimeVlasnika automobila kao string.
+     */
     public String getImePrezimeVlasnika() {
         return imePrezimeVlasnika;
     }
-
+    
+    /**
+     * Postavlja novu vrednost za ime i prezime vlasnika.
+     * 
+     * @param imePrezimeVlasnika kao nova vrednost atributa imePrezimeVlasnika.
+     * @throws NullPointerException ako je uneta vrednost null.
+     */
     public void setImePrezimeVlasnika(String imePrezimeVlasnika) {
     	if(imePrezimeVlasnika==null) {
     		throw new NullPointerException("Ime i prezime ne mogu biti null");
@@ -70,10 +130,22 @@ public class Automobil extends DomenskiObjekat implements Serializable{
         this.imePrezimeVlasnika = imePrezimeVlasnika;
     }
 
+    /**
+     * Vraca godiste automobila.
+     * @return godiste automobila kao int.
+     */
     public int getGodiste() {
         return godiste;
     }
 
+    /**
+     * Postavlja novu vrednost za godiste automobila.
+     * 
+     * Automobil ne moze biti star preko 120+ godina.
+     * 
+     * @param godiste kao nova vrednost atributa godiste.
+     * @throws IllegalArgumentException ako je uneta vrednost manja od 1900.
+     */
     public void setGodiste(int godiste) {
     	if(godiste < 1900) {
     		throw new IllegalArgumentException("Godiste ne sme biti manje od 1900");
@@ -81,21 +153,45 @@ public class Automobil extends DomenskiObjekat implements Serializable{
         this.godiste = godiste;
     }
 
+    /**
+     * Vraca listu uocenih kvarova automobila.
+     * @return uoceniKvarovi automobila kao tipizirana lista klase UoceniKvar.
+     */
     public List<UoceniKvar> getUoceniKvarovi() {
         return uoceniKvarovi;
     }
 
+    /**
+     * Postavlja novu vrednost za listu uocenik kvarova automobila.
+     * 
+     * @param uoceniKvarovi kao nova vrednost atributa uoceniKvarovi.
+     * @throws NullPointerException ako je uneta vrednost null.
+     */
     public void setUoceniKvarovi(List<UoceniKvar> uoceniKvarovi) {
     	if(uoceniKvarovi==null)
     		throw new NullPointerException("Uoceni kvarovi za automobil ne mogu biti null");
         this.uoceniKvarovi = uoceniKvarovi;
     }
 
+    /**
+     * Vraca string reprezentaciju automobila na osnovu svih atributa osim liste uocenih kvarova.
+     * 
+     * @return automobil kao string reprezentacija automobila u odgovarajucem formatu.
+     */
     @Override
     public String toString() {
         return "[Tablice: "+tablice+", Vlasnik: "+imePrezimeVlasnika+", Marka: "+marka+"]";
     }
 
+    /**
+	 * Poredi dva automobila prema tablicama.
+	 * 
+	 * @return
+	 * <ul>
+	 * 		<li> true ako su tablice automobila iste </li>
+	 * 		<li> false ako je unet null, ako objekat nije klase Automobil ili ako su razlicite tablice </li>
+	 * <ul>
+	 */
     @Override
     public boolean equals(Object obj) {
         if(!(obj instanceof Automobil))
