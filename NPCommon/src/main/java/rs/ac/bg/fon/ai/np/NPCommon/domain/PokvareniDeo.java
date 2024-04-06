@@ -14,43 +14,103 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
+ * Predstavlja pokvareni deo automobila.
+ * 
+ * Sastoji se od jednog uocenog kvara za automobil i dela automobila kome je potreban servis. 
+ * Takodje sadrzi cenu popravke.
  *
- * @author Asus
+ * @author Luka Obrenic
+ * @since 1.0.0
  */
 public class PokvareniDeo extends DomenskiObjekat implements Serializable {
 
+	/**
+	 * Uoceni kvar automobila tipa UoceniKvar.
+	 */
     private UoceniKvar uoceniKvar;
+    /**
+     * Deo automobila tipa DeoAutomobila.
+     */
     private DeoAutomobila deo;
+    /**
+     * Cena popravke kao double.
+     */
     private double cena;
 
 
+    /**
+     * Prazan konstruktor za kreiranje jedne instance pokvarei deo sa podrazumevanim vrednostima za njegove atribute.
+     */
     public PokvareniDeo() {
     }
 
+    /**
+     * Parametrizovani konstruktor koji sluzi za kreiranje instance pokvarenog dela sa specificnim vrednostima za njegove atribute.
+     * 
+     * @param uoceniKvar - Uoceni kvar automobila koji se dodeljuje instanci pokvarenog dela pri kreiranju.
+     * @param deo - Deo automobila koji se dodeljuje instanci pokvarenog dela pri kreiranju.
+     * @param cena - Cena popravke koja se dodeljuje instanci pokvarenog dela pri kreiranju.
+     */
     public PokvareniDeo(UoceniKvar uoceniKvar, DeoAutomobila deo, double cena) {
         this.uoceniKvar = uoceniKvar;
         this.deo = deo;
         this.cena = cena;
     }
 
+    /**
+     * Specifican atribut za ovu klasu. 
+     * 
+     * Predstavlja uslov za update u sql upitu nakon WHERE klauzule u string formatu.
+     */
     private String usloviZaUpdate;
+    /**
+     * Postavlja uslove za update u sql upitu nakon WHERE klauzule.
+     * 
+     * Ova tri atributa predstavljaju primarni kljuc u tabeli.
+     * 
+     * @param tbl - broj tablice automobila
+     * @param kid - jedinstveni identifikator kvara
+     * @param did - jedinstveni identifikator dela automobila
+     */
     public void setUsloviZaUpdate(String tbl, int kid,int did) {
         usloviZaUpdate = "tablice='" + tbl + "' AND kvarid="+kid+" AND deoid="+did;
     }
+    
+    /**
+     * Vraca cenu popravke.
+     * 
+     * @return cena popravke kao double.
+     */
     public double getCena() {
         return cena;
     }
 
+    /**
+     * Postavlja novu vrednost cene popravke.
+     * 
+     * @param cena kao nova vrednost cene popravke.
+     * @throws IllegalArgumentException ako je uneta cena manja od nule.
+     */
     public void setCena(double cena) {
     	if(cena<0)
     		throw new IllegalArgumentException("Cena pokvarenog dela ne sme biti < 0");
         this.cena = cena;
     }
 
+    /**
+     * Vraca kvar automobila na koji se odnosi pokvareni deo.
+     * @return uoceniKvar na koji se odnosi pokvaren deo tipa UoceniKvar.
+     */
     public UoceniKvar getUoceniKvar() {
         return uoceniKvar;
     }
 
+    /**
+     * Postavlja novu vrednost za atribut uoceniKvar.
+     * 
+     * @param kvar kao nova vrednost uocenog kvara.
+     * @throws NullPointerException ako je uneta vrednost null.
+     */
     public void setUoceniKvar(UoceniKvar uoceniKvar) {
     	if(uoceniKvar == null)
     		throw new NullPointerException("Uoceni kvar za pokvareni deo ne sme biti null!");
@@ -58,16 +118,33 @@ public class PokvareniDeo extends DomenskiObjekat implements Serializable {
         this.uoceniKvar = uoceniKvar;
     }
 
+    /**
+     * Vraca deo automobila na koji se odnosi pokvareni deo.
+     * @return deo na koji se odnosi pokvaren deo tipa DeoAutomobila.
+     */
     public DeoAutomobila getDeo() {
         return deo;
     }
 
+    /**
+     * Postavlja novu vrednost za atribut deo.
+     * 
+     * @param deo kao nova vrednost dela automobila.
+     * @throws NullPointerException ako je uneta vrednost null.
+     */
     public void setDeo(DeoAutomobila deo) {
     	if(deo == null)
     		throw new NullPointerException("Deo automobila kod pokvarenog dela ne sme biti null!");
         this.deo = deo;
     }
 
+    /**
+     * Vraca string reprezentaciju pokvarenog dela.
+     * 
+     * Sastoji se od jedinstvenog identifikatora uocenog kvara, dela automobila i cene popravke.
+     * 
+     * @return pokvareni deo kao string reprezentacija naloga u odgovarajucem formatu.
+     */
     @Override
     public String toString() {
         return "kvarid: " +uoceniKvar.getKvarID()+", deoid: "+deo.getDeoID()+", cena: "+cena;
@@ -75,6 +152,17 @@ public class PokvareniDeo extends DomenskiObjekat implements Serializable {
     
     
 
+    /**
+	 * Poredi dva pokvarena dela prema uocenom kvaru i delu automobila.
+	 * 
+	 * Pozivaju se equals metode klase UoceniKvar i DeoAutomobila.
+	 * 
+	 * @return
+	 * <ul>
+	 * 		<li> true ako su uoceni kvar i deo automobila isti </li>
+	 * 		<li> false ako je unet null, ako objekat nije klase NalogZaServisiranje ili ako su razliciti uoceni kvar i/ili deo automobila</li>
+	 * <ul>
+	 */
     @Override
     public boolean equals(Object obj) {
     	if (obj == null) {
