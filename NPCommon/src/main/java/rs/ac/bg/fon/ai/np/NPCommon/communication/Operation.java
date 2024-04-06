@@ -5,8 +5,10 @@
 package rs.ac.bg.fon.ai.np.NPCommon.communication;
 
 /**
+ * Predstavlja enumeraciju u kojoj su nabrojane sve sistemske operacije.
  *
- * @author student2
+ * @author Luka Obrenic
+ * @since 1.0.0
  */
 public enum Operation {
     LOGIN,
