@@ -11,27 +11,64 @@ import java.sql.SQLException;
 import java.util.List;
 
 /**
+ * Predstavlja uoceni kvar za automobil.
+ * 
+ * Ima tablice automobila na koji se odnosi, jedinstveni identifikator kvara i opis uocenog kvara.
  *
- * @author Asus
+ * @author Luka Obrenic
+ * @since 1.0.0
  */
 public class UoceniKvar extends DomenskiObjekat implements Serializable{
+	/**
+	 * Automobil na kome je uocen kvar tipa Automobil.
+	 */
     private Automobil automobil;
+    /**
+     * Jedinstveni identifikator kvara.
+     */
     private int kvarID;
+    /**
+     * Opis uocenog kvara kao string.
+     */
     private String opis;
 
+    /**
+     * Prazan konstruktor za kreiranje jedne instance uocenog kvara sa podrazumevanim vrednostima za njegove atribute.
+     */
     public UoceniKvar() {
     }
 
+    /**
+     * Parametrizovani konstruktor koji sluzi za kreiranje instance uocenog kvara sa specificnim vrednostima za njegove atribute.
+     * 
+     * @param automobil - Automobil koji se dodeljuje instanci uocenog kvara pri kreiranju.
+     * @param kvarID - Jedinstveni indentifikator koji se dodeljuje instanci uocenog kvara pri kreiranju.
+     * @param opis - Opis kvara koji se dodeljuje instanci uocenog kvara pri kreiranju.
+     */
     public UoceniKvar(Automobil automobil, int kvarID, String opis) {
         this.automobil = automobil;
         this.kvarID = kvarID;
         this.opis = opis;
     }
 
+    /**
+     * Vraca opis kvara.
+     * 
+     * @return opis kvara kao string.
+     */
     public String getOpis() {
         return opis;
     }
 
+    /**
+	 * Postavlja novu vrednost atributa opis.
+	 * 
+	 * Opis ne sme biti null niti prazan string.
+	 * 
+	 * @param opis nova vrednost za opis kvara
+	 * @throws NullPointerException ako se unese null vrednost
+	 * @throws IllegalArgumentException ako se unese prazan string
+	 */
     public void setOpis(String opis) {
     	if(opis == null)
     		throw new NullPointerException("Opis kvara ne sme biti null!");
@@ -40,31 +77,72 @@ public class UoceniKvar extends DomenskiObjekat implements Serializable{
         this.opis = opis;
     }
 
+    /**
+     * Vraca automobil na kojem je uocen kvar.
+     * @return automobil na kojem je uocen kvar tipa Automobil.
+     */
     public Automobil getAutomobil() {
         return automobil;
     }
 
+    /**
+	 * Postavlja novu vrednost atributa automobil.
+	 * 
+	 * Automobil ne sme biti null.
+	 * 
+	 * @param automobil nova vrednost za automobil
+	 * @throws NullPointerException ako se unese null vrednost
+	 */
     public void setAutomobil(Automobil automobil) {
     	if(automobil==null)
     		throw new NullPointerException("Automobil kod uocenog kvara ne sme biti null!");
         this.automobil = automobil;
     }
 
+    /**
+     * Vraca jedinstveni identifikator uocenog kvara.
+     * @return kvarID identifikator kao int.
+     */
     public int getKvarID() {
         return kvarID;
     }
 
+    /**
+     * Postavlja novu vrednost za jedinstveni identifikator uocenog kvara.
+     * 
+     * Jedinstveni identifikator ne sme biti manji od nule.
+     * 
+     * @param kvarID kao nova vrednost identifikatora.
+     * 
+     * @throws IllegalArgumentException ako je uneta vrednost manja od nule.
+     */
     public void setKvarID(int kvarID) {
     	if(kvarID<0)
     		throw new IllegalArgumentException("KvarID kod uocenog kvara ne sme biti < 0");
         this.kvarID = kvarID;
     }
 
+    /**
+     * Vraca string reprezentaciju uocenog kvara na osnovu tablica automobila i opisa kvara.
+     * 
+     * @return uoceni kvar kao string reprezentacija u odgovarajucem formatu.
+     */
     @Override
     public String toString() {
         return "Automobil: "+automobil.getTablice()+", Opis kvara: "+opis;
     }
 
+    /**
+	 * Poredi dva uocena kvara prema automobilu i jedinstvenom identifikatoru kvara.
+	 * 
+	 * Poziva se equals metoda klase Automobil.
+	 * 
+	 * @return
+	 * <ul>
+	 * 		<li> true ako su automobil i jedinstveni identifikator kvara isti </li>
+	 * 		<li> false ako je unet null, ako objekat nije klase UoceniKvar ili ako su razliciti automobil i/ili jedinstveni identifikator kvara</li>
+	 * <ul>
+	 */
     @Override
     public boolean equals(Object obj) {
         if(!(obj instanceof UoceniKvar))
