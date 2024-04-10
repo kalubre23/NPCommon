@@ -181,6 +181,7 @@ public class PokvareniDeo extends DomenskiObjekat implements Serializable {
         return this.cena == 0 ? "pokvarendeo AS pd\n"
                 + "INNER JOIN automobil AS a ON a.tablice=pd.tablice\n"
                 + "INNER JOIN marka AS m ON m.markaid=a.markaid\n"
+                + "INNER JOIN vlasnik AS v ON v.vlasnikid=a.vlasnikid\n"
                 + "INNER JOIN uocenikvar AS uk ON uk.kvarid=pd.kvarid\n"
                 + "INNER JOIN deoautomobila AS d ON d.deoid=pd.deoid " : "pokvarendeo";
     }
@@ -197,7 +198,7 @@ public class PokvareniDeo extends DomenskiObjekat implements Serializable {
 
     @Override
     public String vratiVrednostiZaSelect() {
-        return "a.tablice, a.vlasnik, a.godiste, a.markaid, m.naziv, pd.kvarid, uk.opis, pd.deoid, d.naziv, cena";
+        return "a.tablice, a.godiste, a.markaid, m.naziv, a.vlasnikid, v.ime, v.prezime, v.email, v.telefon, pd.kvarid, uk.opis, pd.deoid, d.naziv, cena";
     }
 
     @Override
@@ -225,7 +226,8 @@ public class PokvareniDeo extends DomenskiObjekat implements Serializable {
             while (rs.next()) {
                 System.out.println("Usao je u while petlju!");
                 Marka marka = new Marka(rs.getInt("a.markaid"), rs.getString("m.naziv"));
-                Automobil automobil = new Automobil(rs.getString("a.tablice"), rs.getString("a.vlasnik"), rs.getInt("a.godiste"), marka, null);
+                Vlasnik vlasnik = new Vlasnik(rs.getInt("a.vlasnikid"),rs.getString("v.ime"),rs.getString("v.prezime"),rs.getString("v.email"),rs.getString("v.telefon"));
+                Automobil automobil = new Automobil(rs.getString("a.tablice"), vlasnik, rs.getInt("a.godiste"), marka, null);
                 UoceniKvar uk = new UoceniKvar(automobil, rs.getInt("pd.kvarid"), rs.getString("uk.opis"));
                 DeoAutomobila deoAutomobila = new DeoAutomobila(rs.getInt("pd.deoid"), rs.getString("d.naziv"));
                 PokvareniDeo pd = new PokvareniDeo(uk, deoAutomobila, rs.getDouble("cena"));

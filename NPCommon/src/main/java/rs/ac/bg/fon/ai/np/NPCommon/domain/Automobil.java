@@ -27,10 +27,8 @@ public class Automobil extends DomenskiObjekat implements Serializable{
 	 * Tablice automobila kao string.
 	 */
     private String tablice;
-    /**
-     * Ime i prezime vlasnika kao string.
-     */
-    private String imePrezimeVlasnika;
+    
+    private Vlasnik vlasnik;
     /**
      * Godiste automobila kao int.
      */
@@ -58,9 +56,9 @@ public class Automobil extends DomenskiObjekat implements Serializable{
      * @param marka - Marka automobila koja se dodeljuje instanci automobila pri kreiranju.
      * @param uoceniKvarovi - Lista uocenih kvarova automobila koja se dodeljuje instanci automobila pri kreiranju.
      */
-    public Automobil(String tablice, String imePrezimeVlasnika, int godiste, Marka marka, List<UoceniKvar> uoceniKvarovi) {
+    public Automobil(String tablice, Vlasnik vlasnik, int godiste, Marka marka, List<UoceniKvar> uoceniKvarovi) {
         this.tablice = tablice;
-        this.imePrezimeVlasnika = imePrezimeVlasnika;
+        this.vlasnik = vlasnik;
         this.godiste = godiste;
         this.marka = marka;
         this.uoceniKvarovi = uoceniKvarovi;
@@ -108,28 +106,18 @@ public class Automobil extends DomenskiObjekat implements Serializable{
         this.tablice = tablice;
     }
 
-    /**
-     * Vraca ime i prezime vlasnika automobila.
-     * @return imePrezimeVlasnika automobila kao string.
-     */
-    public String getImePrezimeVlasnika() {
-        return imePrezimeVlasnika;
-    }
-    
-    /**
-     * Postavlja novu vrednost za ime i prezime vlasnika.
-     * 
-     * @param imePrezimeVlasnika kao nova vrednost atributa imePrezimeVlasnika.
-     * @throws NullPointerException ako je uneta vrednost null.
-     */
-    public void setImePrezimeVlasnika(String imePrezimeVlasnika) {
-    	if(imePrezimeVlasnika==null) {
-    		throw new NullPointerException("Ime i prezime ne mogu biti null");
-    	}
-    	
-        this.imePrezimeVlasnika = imePrezimeVlasnika;
+    public Vlasnik getVlasnik() {
+        return vlasnik;
     }
 
+    public void setVlasnik(Vlasnik vlasnik) {
+        if(vlasnik==null)
+            throw new NullPointerException("Vlasnik automobila ne moze biti null");
+        if(!(vlasnik instanceof Vlasnik))
+            throw new IllegalArgumentException("Vlasnik mora instanca klase Vlasnik");
+        this.vlasnik = vlasnik;
+    }
+   
     /**
      * Vraca godiste automobila.
      * @return godiste automobila kao int.
@@ -180,7 +168,7 @@ public class Automobil extends DomenskiObjekat implements Serializable{
      */
     @Override
     public String toString() {
-        return "[Tablice: "+tablice+", Vlasnik: "+imePrezimeVlasnika+", Marka: "+marka+"]";
+        return "[Tablice: "+tablice+", Vlasnik: "+vlasnik.getIme() + " " + vlasnik.getPrezime()+", Marka: "+marka+"]";
     }
 
     /**
@@ -203,12 +191,12 @@ public class Automobil extends DomenskiObjekat implements Serializable{
 
     @Override
     public String vratiNazivTabele() {
-          return this.tablice == null ? "automobil INNER JOIN marka ON automobil.markaid = marka.markaid" : "automobil";
+          return this.marka == null ? "automobil INNER JOIN marka ON automobil.markaid = marka.markaid INNER JOIN vlasnik ON automobil.vlasnikid = vlasnik.vlasnikid" : "automobil";
     }
 
     @Override
     public String getKoloneZaInsert() {
-        return "tablice, vlasnik, godiste, markaid";
+        return "tablice, godiste, markaid, vlasnikid";
     }
 
     @Override
@@ -218,15 +206,15 @@ public class Automobil extends DomenskiObjekat implements Serializable{
 
     @Override
     public String vratiVrednostiZaSelect() {
-        return "tablice, vlasnik, godiste, automobil.markaid, marka.naziv";
+        return "tablice, godiste, automobil.markaid, marka.naziv, automobil.vlasnikid, vlasnik.ime, vlasnik.prezime, vlasnik.email, vlasnik.telefon";
     }
 
     @Override
     public void postaviVrednostiZaInsert(PreparedStatement statement, DomenskiObjekat domainObject) throws SQLException {
         statement.setString(1, ((Automobil)domainObject).getTablice());
-        statement.setString(2, ((Automobil)domainObject).getImePrezimeVlasnika());
-        statement.setInt(3, ((Automobil)domainObject).getGodiste());
-        statement.setInt(4, ((Automobil)domainObject).getMarka().getMarkaID());
+        statement.setInt(2, ((Automobil)domainObject).getGodiste());
+        statement.setInt(3, ((Automobil)domainObject).getMarka().getMarkaID());
+        statement.setInt(4, ((Automobil)domainObject).getVlasnik().getVlasnikID());
     }
 
     @Override
@@ -241,9 +229,9 @@ public class Automobil extends DomenskiObjekat implements Serializable{
                 Automobil auto = new Automobil();
                 System.out.println("a");
                 auto.setTablice(rs.getString(1));
-                auto.setImePrezimeVlasnika(rs.getString(2));
-                auto.setGodiste(rs.getInt(3));
-                auto.setMarka(new Marka(rs.getInt(4), rs.getString(5)));
+                auto.setGodiste(rs.getInt(2));
+                auto.setMarka(new Marka(rs.getInt(3), rs.getString(4)));
+                auto.setVlasnik(new Vlasnik(rs.getInt(5),rs.getString(6),rs.getString(7),rs.getString(8),rs.getString(9)));
                 auto.setUoceniKvarovi(new ArrayList<>());
                 automobili.add(auto);
                 System.out.println(auto.toString());
@@ -268,7 +256,7 @@ public class Automobil extends DomenskiObjekat implements Serializable{
 
     @Override
     public String vratiVrednostiZaUpdate() {
-        return " vlasnik='" + this.imePrezimeVlasnika +"', godiste=" +this.godiste+ ", markaid=" +this.marka.getMarkaID();
+        return "godiste=" +this.godiste+ ", markaid=" +this.marka.getMarkaID()+", vlasnikid=" +this.getVlasnik().getVlasnikID();
     }
 
     @Override
@@ -298,7 +286,7 @@ public class Automobil extends DomenskiObjekat implements Serializable{
     @Override
     public String vratiUslovZaVise() {
         //ovde treba da vratim taj uslov sa like
-        String uslov = "LOWER(vlasnik) LIKE '" + this.getImePrezimeVlasnika() + "%'";
+        String uslov = "LOWER(tablice) LIKE '" + this.getTablice() + "%'";
         return uslov;
     }
 

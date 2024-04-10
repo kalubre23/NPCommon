@@ -215,6 +215,7 @@ public class NalogZaServisiranje extends DomenskiObjekat implements Serializable
     public String vratiNazivTabele() {
         return this.cena == 0 ? "nalog AS n "+
                                 "INNER JOIN automobil AS a ON a.tablice=n.tablice "+
+                                "INNER JOIN vlasnik AS v ON a.vlasnikid=v.vlasnikid "+
                                 "INNER JOIN marka AS m ON a.markaid=m.markaid "+
                                 "INNER JOIN uocenikvar AS uk ON n.kvarid=uk.kvarid "+
                                 "INNER JOIN serviseri AS s ON n.serviserid=s.serviserid " : "nalog ";
@@ -232,7 +233,7 @@ public class NalogZaServisiranje extends DomenskiObjekat implements Serializable
 
     @Override
     public String vratiVrednostiZaSelect() {
-        return "nalogid, datum, cena, n.tablice, a.vlasnik, a.godiste, a.markaid, m.naziv, n.kvarid, uk.opis, n.serviserid, s.ime, s.prezime, s.username";
+        return "nalogid, datum, cena, n.tablice, a.vlasnikid, v.ime, v.prezime, v.email, v.telefon, a.godiste, a.markaid, m.naziv, n.kvarid, uk.opis, n.serviserid, s.ime, s.prezime, s.username";
     }
 
     @Override
@@ -261,7 +262,8 @@ public class NalogZaServisiranje extends DomenskiObjekat implements Serializable
             while (rs.next()) {
                 System.out.println("Usao je u while petlju!");
                 Marka marka = new Marka(rs.getInt("a.markaid"), rs.getString("m.naziv"));
-                Automobil automobil = new Automobil(rs.getString("n.tablice"), rs.getString("a.vlasnik"), rs.getInt("a.godiste"), marka, null);
+                Vlasnik vlasnik = new Vlasnik(rs.getInt("a.vlasnikid"), rs.getString("v.ime"), rs.getString("v.prezime"), rs.getString("v.email"), rs.getString("v.telefon"));
+                Automobil automobil = new Automobil(rs.getString("n.tablice"), vlasnik, rs.getInt("a.godiste"), marka, null);
                 UoceniKvar uk = new UoceniKvar(automobil, rs.getInt("n.kvarid"), rs.getString("uk.opis"));
                 Serviser s = new Serviser(rs.getInt("n.serviserid"), rs.getString("s.ime"), rs.getString("s.prezime"), rs.getString("s.username"), null);
                 NalogZaServisiranje nalog = new NalogZaServisiranje(rs.getInt("nalogid"), rs.getDate("datum").toLocalDate(), rs.getDouble("cena"), uk, s);
