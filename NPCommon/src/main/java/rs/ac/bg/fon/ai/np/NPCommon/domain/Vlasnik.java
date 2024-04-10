@@ -12,20 +12,51 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- *
- * @author Asus
+ * Prestavlja vlasnik automobila.
+ * 
+ * Ime jedinstven identifikator, ime, prezime, email i telefon.
+ * 
+ * @author Luka Obrenic
+ * @since 1.1.0
  */
 public class Vlasnik extends DomenskiObjekat implements Serializable {
 
+	/**
+	 * Jedinstven idefntifikator vlasnika automobila kao int.
+	 */
     private int vlasnikID;
+    /**
+     * Ime vlasnika kao string.
+     */
     private String ime;
+    /**
+     * Prezime vlasnika kao string.
+     */
     private String prezime;
+    /**
+     * Email vlasnika kao string.
+     */
     private String email;
+    /**
+     * Telefon vlasnika kao string.
+     */
     private String telefon;
 
+    /**
+     * Prazan konstruktor za kreiranje jedne instance vlasnika sa podrazumevanim vrednostima za njegove atribute.
+     */
     public Vlasnik() {
     }
 
+    /**
+     * Parametrizovani konstruktor koji sluzi za kreiranje instance vlasnika sa specificnim vrednostima za njegove atribute.
+     * 
+     * @param vlasnikID - Jedinstevni identifikator vlasnika koji se dodeljuje instanci automobila pri kreiranju.
+     * @param ime - Ime vlasnika koje se dodeljuje instanci automobila pri kreiranju.
+     * @param prezime - Prezime vlasnika koje se dodeljuje instanci automobila pri kreiranju.
+     * @param email - Email vlasnika koji se dodeljuje instanci automobila pri kreiranju.
+     * @param telefon - Telefon vlasnika koji se dodeljuje instanci automobila pri kreiranju.
+     */
     public Vlasnik(int vlasnikID, String ime, String prezime, String email, String telefon) {
         this.vlasnikID = vlasnikID;
         this.ime = ime;
@@ -34,10 +65,22 @@ public class Vlasnik extends DomenskiObjekat implements Serializable {
         this.telefon = telefon;
     }
 
+    /**
+     * Vraca jedinstveni identifikator vlasnika.
+     * @return vlasnikID kao int.
+     */
     public int getVlasnikID() {
         return vlasnikID;
     }
 
+    /**
+     * Postavlja novu vrednost za jedinstveni indetifikator vlasnika.
+     * 
+     * Ne sme biti manja od nule.
+     * 
+     * @param vlasnikID kao nova vrednost za jedinstveni identifikator, kao int
+     * @throws IllegalArgumentException ako je uneta vrednost manja od nule
+     */
     public void setVlasnikID(int vlasnikID) {
         if (vlasnikID < 0) {
             throw new IllegalArgumentException("VlasnikID ne sme biti manji od 0!");
@@ -45,10 +88,22 @@ public class Vlasnik extends DomenskiObjekat implements Serializable {
         this.vlasnikID = vlasnikID;
     }
 
+    /**
+     * Vraca ime vlasnika.
+     * @return ime vlasnika kao string.
+     */
     public String getIme() {
         return ime;
     }
 
+    /**
+     * Postavlja novu vrednost za ime vlasnika.
+     * 
+     * Ne sme biti null.
+     * 
+     * @param ime kao nova vrednost za ime vlasnika, kao string
+     * @throws IllegalArgumentException ako je uneta vrednost null
+     */
     public void setIme(String ime) {
         if (ime == null) {
             throw new NullPointerException("Ime ne sme biti null!");
@@ -56,10 +111,23 @@ public class Vlasnik extends DomenskiObjekat implements Serializable {
         this.ime = ime;
     }
 
+    /**
+     * Vraca prezime vlasnika.
+     * @return prezime vlasnika kao string.
+     */
     public String getPrezime() {
         return prezime;
     }
 
+    /**
+     * Postavlja novu vrednost za prezime vlasnika.
+     * 
+     * Ne sme biti null niti prazan string.
+     * 
+     * @param prezime kao nova vrednost za prezime vlasnika, kao string
+     * @throws IllegalArgumentException ako je unet prazan string
+     * @throws NullPointerException ako je uneta vrednost null
+     */
     public void setPrezime(String prezime) {
         if (prezime == null) {
             throw new NullPointerException("Prezime ne sme biti null!");
@@ -70,10 +138,24 @@ public class Vlasnik extends DomenskiObjekat implements Serializable {
         this.prezime = prezime;
     }
 
+    /**
+     * Vraca email vlasnika.
+     * @return email vlasnika kao string.
+     */
     public String getEmail() {
         return email;
     }
 
+    /**
+     * Postavlja novu vrednost za email vlasnika.
+     * 
+     * Ne sme biti null, prazan string i mora sadrzati znakove '@' i '.'.
+     * 
+     * @param email kao nova vrednost za email vlasnika, kao string
+     * @throws IllegalArgumentException ako je unet prazan string ili email ne sadrzi znakove '@' i '.'
+     * @throws NullPointerException ako je uneta vrednost null
+     * 
+     */
     public void setEmail(String email) {
         if (email == null) {
             throw new NullPointerException("Email ne sme biti null!");
@@ -87,10 +169,23 @@ public class Vlasnik extends DomenskiObjekat implements Serializable {
         this.email = email;
     }
 
+    /**
+     * Vraca telefon vlasnika.
+     * @return telefon vlasnika kao string.
+     */
     public String getTelefon() {
         return telefon;
     }
 
+    /**
+     * Postavlja novu vrednost za telefon vlasnika.
+     * 
+     * Ne sme biti null niti prazan string.
+     * 
+     * @param telefon kao nova vrednost za telefon vlasnika, kao string
+     * @throws IllegalArgumentException ako je unet prazan string
+     * @throws NullPointerException ako je uneta vrednost null
+     */
     public void setTelefon(String telefon) {
         if (telefon == null) {
             throw new NullPointerException("Telefon ne sme biti null!");
@@ -102,11 +197,26 @@ public class Vlasnik extends DomenskiObjekat implements Serializable {
         this.telefon = telefon;
     }
 
+    /**
+     * Vraca string reprezentaciju vlasnika na osnovu imena, prezimena i email-a.
+     * 
+     * @return vlasnik kao string reprezentacija vlasnika u odgovarajucem formatu.
+     */
     @Override
     public String toString() {
         return this.ime + " " + this.prezime + ", " + this.email;
     }
 
+    /**
+	 * Poredi dva vlasnika prema jedinstvenom identifikatoru.
+	 * 
+	 * 
+	 * @return
+	 * <ul>
+	 * 		<li> true ako je unet isti objekat ili ako je jedinstveni identifikator isti </li>
+	 * 		<li> false ako je unet null, ako objekat nije klase Vlasnik ili ako su razliciti jedinstveni identifikatori</li>
+	 * <ul>
+	 */
     @Override
     public boolean equals(Object obj) {
         if(obj == this)

@@ -27,7 +27,9 @@ public class Automobil extends DomenskiObjekat implements Serializable{
 	 * Tablice automobila kao string.
 	 */
     private String tablice;
-    
+    /**
+     * Vlasnik automobila tipa Vlasnik.
+     */
     private Vlasnik vlasnik;
     /**
      * Godiste automobila kao int.
@@ -51,7 +53,7 @@ public class Automobil extends DomenskiObjekat implements Serializable{
     /**
      * Parametrizovani konstruktor koji sluzi za kreiranje instance automobila sa specificnim vrednostima za njegove atribute.
      * @param tablice - Broj tablica koji se dodeljuje instanci automobila pri kreiranju.
-     * @param imePrezimeVlasnika - Ime i prezime vlasnika koji se dodeljuje instanci automobila pri kreiranju.
+     * @param vlasnik - Vlasnik koji se dodeljuje instanci automobila pri kreiranju.
      * @param godiste - Godiste automobila koje se dodeljuje instanci automobila pri kreiranju.
      * @param marka - Marka automobila koja se dodeljuje instanci automobila pri kreiranju.
      * @param uoceniKvarovi - Lista uocenih kvarova automobila koja se dodeljuje instanci automobila pri kreiranju.
@@ -106,10 +108,23 @@ public class Automobil extends DomenskiObjekat implements Serializable{
         this.tablice = tablice;
     }
 
+    /**
+     * Vraca vlasnika automobila.
+     * @return vlasnik automobila tipa Vlasnik.
+     */
     public Vlasnik getVlasnik() {
         return vlasnik;
     }
 
+    /**
+     * Postavlja novu vrednost za vlasnika automobila.
+     * 
+     * Ne moze biti null niti i mora biti instanca klase Vlasnik.
+     * 
+     * @param vlasnik kao noova vrednost vlasnika, tipa Vlasnik
+     * @throws NullPointerException ako je uneta vrednost null
+     * @throws IllegalArgumentException ako je uneta vrednost ne pripada klasi Vlasnik
+     */
     public void setVlasnik(Vlasnik vlasnik) {
         if(vlasnik==null)
             throw new NullPointerException("Vlasnik automobila ne moze biti null");
