@@ -36,15 +36,20 @@ class AutomobilTest {
 	}
 	
 	@Test
-	void testSetImePrezimeVlasnikaNull() {
-		assertThrows(NullPointerException.class, ()->a.setImePrezimeVlasnika(null));
+	void testSetVlasnikNull() {
+		assertThrows(NullPointerException.class, ()->a.setVlasnik(null));
 	}
 	
+
 	@Test
-	void testSetImePrezimeVlasnikaOk() {
-		a.setImePrezimeVlasnika("Marko Markovic");
-		assertEquals("Marko Markovic", a.getImePrezimeVlasnika());
+	void testSetVlasnikOk() {
+		Vlasnik v = new Vlasnik();
+		v.setVlasnikID(2);
+		a.setVlasnik(v);
+		
+		assertEquals(v, a.getVlasnik());
 	}
+	
 	
 	@Test
 	void testSetGodisteManjeOd1900() {
@@ -96,13 +101,17 @@ class AutomobilTest {
 	@Test
 	void testToString() {
 		a.setTablice("BG123123");
-		a.setImePrezimeVlasnika("Marko Markovic");
+		Vlasnik v = new Vlasnik();
+		v.setIme("Marko");
+		v.setPrezime("Markovic");
+		a.setVlasnik(v);
 		Marka m = new Marka();
 		m.setNaziv("Opel");
 		a.setMarka(m);
 		
 		assertTrue(a.toString().toLowerCase().contains("bg123123"));
-		assertTrue(a.toString().toLowerCase().contains("marko markovic"));
+		assertTrue(a.toString().toLowerCase().contains("marko"));
+		assertTrue(a.toString().toLowerCase().contains("markovic"));
 		assertTrue(a.toString().toLowerCase().contains("opel"));
 	}
 	
