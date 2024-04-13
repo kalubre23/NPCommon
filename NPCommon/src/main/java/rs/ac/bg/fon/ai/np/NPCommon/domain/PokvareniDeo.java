@@ -52,9 +52,9 @@ public class PokvareniDeo extends DomenskiObjekat implements Serializable {
      * @param cena - Cena popravke koja se dodeljuje instanci pokvarenog dela pri kreiranju.
      */
     public PokvareniDeo(UoceniKvar uoceniKvar, DeoAutomobila deo, double cena) {
-        this.uoceniKvar = uoceniKvar;
-        this.deo = deo;
-        this.cena = cena;
+        setUoceniKvar(uoceniKvar);
+        setDeo(deo);
+        setCena(cena);
     }
 
     /**

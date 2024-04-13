@@ -46,9 +46,9 @@ public class UoceniKvar extends DomenskiObjekat implements Serializable{
      * @param opis - Opis kvara koji se dodeljuje instanci uocenog kvara pri kreiranju.
      */
     public UoceniKvar(Automobil automobil, int kvarID, String opis) {
-        this.automobil = automobil;
-        this.kvarID = kvarID;
-        this.opis = opis;
+        setAutomobil(automobil);
+        setKvarID(kvarID);
+        setOpis(opis);
     }
 
     /**

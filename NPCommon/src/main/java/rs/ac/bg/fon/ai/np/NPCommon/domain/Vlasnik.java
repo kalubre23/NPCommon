@@ -58,11 +58,11 @@ public class Vlasnik extends DomenskiObjekat implements Serializable {
      * @param telefon - Telefon vlasnika koji se dodeljuje instanci automobila pri kreiranju.
      */
     public Vlasnik(int vlasnikID, String ime, String prezime, String email, String telefon) {
-        this.vlasnikID = vlasnikID;
-        this.ime = ime;
-        this.prezime = prezime;
-        this.email = email;
-        this.telefon = telefon;
+        setVlasnikID(vlasnikID);
+        setIme(ime);
+        setPrezime(prezime);
+        setEmail(email);
+        setTelefon(telefon);
     }
 
     /**

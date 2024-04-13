@@ -64,11 +64,11 @@ public class NalogZaServisiranje extends DomenskiObjekat implements Serializable
      */
     public NalogZaServisiranje(int nalogID, LocalDate datum, 
          double cena, UoceniKvar kvar, Serviser serviser) {
-        this.nalogID = nalogID;
-        this.datum = datum;
-        this.cena = cena;
-        this.kvar = kvar;
-        this.serviser = serviser;
+        setNalogID(nalogID);
+        setDatum(datum);
+        setCena(cena);
+        setKvar(kvar);
+        setServiser(serviser);
     }
     
     /**

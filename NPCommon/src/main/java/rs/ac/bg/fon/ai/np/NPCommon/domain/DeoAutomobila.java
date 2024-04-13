@@ -44,8 +44,8 @@ public class DeoAutomobila extends DomenskiObjekat implements Serializable{
      * @param naziv - Naziv dela koji se dodeljuje instanci dela automobila pri kreiranju.
      */
     public DeoAutomobila(int deoID, String naziv) {
-        this.deoID = deoID;
-        this.naziv = naziv;
+        setDeoID(deoID);
+        setNaziv(naziv);
     }
 
     /**

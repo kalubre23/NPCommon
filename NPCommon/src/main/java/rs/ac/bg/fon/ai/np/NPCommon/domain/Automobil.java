@@ -59,11 +59,11 @@ public class Automobil extends DomenskiObjekat implements Serializable{
      * @param uoceniKvarovi - Lista uocenih kvarova automobila koja se dodeljuje instanci automobila pri kreiranju.
      */
     public Automobil(String tablice, Vlasnik vlasnik, int godiste, Marka marka, List<UoceniKvar> uoceniKvarovi) {
-        this.tablice = tablice;
-        this.vlasnik = vlasnik;
-        this.godiste = godiste;
-        this.marka = marka;
-        this.uoceniKvarovi = uoceniKvarovi;
+        setTablice(tablice);
+        setVlasnik(vlasnik);
+        setGodiste(godiste);
+        setMarka(marka);
+        setUoceniKvarovi(uoceniKvarovi);
     }
 
     /**

@@ -44,8 +44,8 @@ public class Marka extends DomenskiObjekat implements Serializable{
      * @param naziv - Naziv marke koji se dodeljuje instanci marke automobila pri kreiranju.
      */
     public Marka(int markaID, String naziv) {
-        this.markaID = markaID;
-        this.naziv = naziv;
+        setMarkaID(markaID);
+        setNaziv(naziv);
     }
 
     /**

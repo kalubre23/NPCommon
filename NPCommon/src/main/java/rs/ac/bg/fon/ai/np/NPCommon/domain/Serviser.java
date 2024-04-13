@@ -13,6 +13,8 @@ import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.sql.RowSetReader;
+
 /**
  * Predstavlja servisera koji radi u auto servisu.
  * 
@@ -61,11 +63,11 @@ public class Serviser extends DomenskiObjekat implements Serializable {
      */
     public Serviser(int serviserID, String ime, String prezime,
          String username, String password) {
-        this.serviserID = serviserID;
-        this.ime = ime;
-        this.prezime = prezime;
-        this.username = username;
-        this.password = password;
+        setServiserID(serviserID);
+        setIme(ime);
+        setPrezime(prezime);
+        setUsername(username);
+        setPassword(password);
     }
 
     /**
@@ -75,8 +77,8 @@ public class Serviser extends DomenskiObjekat implements Serializable {
      * @param password - Password koje se dodeljuje instanci servisera pri kreiranju.
      */
     public Serviser(String username, String password) {
-        this.username = username;
-        this.password = password;
+        setUsername(username);
+        setPassword(password);
     }
 
     /**
