@@ -227,7 +227,7 @@ public class PokvareniDeo extends DomenskiObjekat implements Serializable {
                 System.out.println("Usao je u while petlju!");
                 Marka marka = new Marka(rs.getInt("a.markaid"), rs.getString("m.naziv"));
                 Vlasnik vlasnik = new Vlasnik(rs.getInt("a.vlasnikid"),rs.getString("v.ime"),rs.getString("v.prezime"),rs.getString("v.email"),rs.getString("v.telefon"));
-                Automobil automobil = new Automobil(rs.getString("a.tablice"), vlasnik, rs.getInt("a.godiste"), marka, null);
+                Automobil automobil = new Automobil(rs.getString("a.tablice"), vlasnik, rs.getInt("a.godiste"), marka, new ArrayList<>());
                 UoceniKvar uk = new UoceniKvar(automobil, rs.getInt("pd.kvarid"), rs.getString("uk.opis"));
                 DeoAutomobila deoAutomobila = new DeoAutomobila(rs.getInt("pd.deoid"), rs.getString("d.naziv"));
                 PokvareniDeo pd = new PokvareniDeo(uk, deoAutomobila, rs.getDouble("cena"));

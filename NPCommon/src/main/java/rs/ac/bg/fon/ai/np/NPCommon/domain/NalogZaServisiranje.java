@@ -263,9 +263,9 @@ public class NalogZaServisiranje extends DomenskiObjekat implements Serializable
                 System.out.println("Usao je u while petlju!");
                 Marka marka = new Marka(rs.getInt("a.markaid"), rs.getString("m.naziv"));
                 Vlasnik vlasnik = new Vlasnik(rs.getInt("a.vlasnikid"), rs.getString("v.ime"), rs.getString("v.prezime"), rs.getString("v.email"), rs.getString("v.telefon"));
-                Automobil automobil = new Automobil(rs.getString("n.tablice"), vlasnik, rs.getInt("a.godiste"), marka, null);
+                Automobil automobil = new Automobil(rs.getString("n.tablice"), vlasnik, rs.getInt("a.godiste"), marka, new ArrayList<>());
                 UoceniKvar uk = new UoceniKvar(automobil, rs.getInt("n.kvarid"), rs.getString("uk.opis"));
-                Serviser s = new Serviser(rs.getInt("n.serviserid"), rs.getString("s.ime"), rs.getString("s.prezime"), rs.getString("s.username"), null);
+                Serviser s = new Serviser(rs.getInt("n.serviserid"), rs.getString("s.ime"), rs.getString("s.prezime"), rs.getString("s.username"), "missing");
                 NalogZaServisiranje nalog = new NalogZaServisiranje(rs.getInt("nalogid"), rs.getDate("datum").toLocalDate(), rs.getDouble("cena"), uk, s);
                 lista.add(nalog);
                 System.out.println(nalog);
