@@ -70,6 +70,11 @@ class MarkaTest {
 	}
 	
 	@Test
+	void testEqualsNull() {
+		assertFalse(m.equals(null));
+	}
+	
+	@Test
 	void testEqualsDrugaKlasa() {
 		assertFalse(m.equals(new RuntimeException()));
 	}

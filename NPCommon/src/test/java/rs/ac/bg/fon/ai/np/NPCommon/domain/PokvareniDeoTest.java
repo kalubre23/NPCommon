@@ -114,6 +114,11 @@ class PokvareniDeoTest {
 	}
 	
 	@Test
+	void testEqualsNull() {
+		assertFalse(pd.equals(null));
+	}
+	
+	@Test
 	void testEqualsDrugaKlasa() {
 		assertFalse(pd.equals(new RuntimeException()));
 	}

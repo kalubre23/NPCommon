@@ -115,9 +115,9 @@ public class DeoAutomobila extends DomenskiObjekat implements Serializable{
 	 */
     @Override
     public boolean equals(Object obj) {
+    	if(obj == null)
+    		return false;
         if(!(obj instanceof DeoAutomobila))
-            return false;
-        if(obj == null)
             return false;
         
         return (((DeoAutomobila)obj).getDeoID() == this.deoID);

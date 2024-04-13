@@ -197,9 +197,9 @@ public class Automobil extends DomenskiObjekat implements Serializable{
 	 */
     @Override
     public boolean equals(Object obj) {
+    	if(obj == null)
+    		return false;
         if(!(obj instanceof Automobil))
-            return false;
-        if(obj == null)
             return false;
         return (((Automobil)obj).getTablice().equals(this.tablice));
     }

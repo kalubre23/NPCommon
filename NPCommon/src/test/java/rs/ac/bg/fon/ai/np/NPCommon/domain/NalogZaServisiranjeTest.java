@@ -113,6 +113,11 @@ class NalogZaServisiranjeTest {
 	}
 	
 	@Test
+	void testEqualsNull() {
+		assertFalse(n.equals(null));
+	}
+	
+	@Test
 	void testEqualsDrugaKlasa() {
 		assertFalse(n.equals(new RuntimeException()));
 	}

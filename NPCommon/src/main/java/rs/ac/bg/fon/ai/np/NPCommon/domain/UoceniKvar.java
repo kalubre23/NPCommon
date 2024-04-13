@@ -145,9 +145,9 @@ public class UoceniKvar extends DomenskiObjekat implements Serializable{
 	 */
     @Override
     public boolean equals(Object obj) {
+    	if(obj == null)
+    		return false;
         if(!(obj instanceof UoceniKvar))
-            return false;
-        if(obj == null)
             return false;
         UoceniKvar uk = (UoceniKvar)obj;
         

@@ -70,6 +70,11 @@ class DeoAutomobilaTest {
 	}
 	
 	@Test
+	void testEqualsNull() {
+		assertFalse(deo.equals(null));
+	}
+	
+	@Test
 	void testEqualsDrugaKlasa() {
 		assertFalse(deo.equals(new RuntimeException()));
 	}

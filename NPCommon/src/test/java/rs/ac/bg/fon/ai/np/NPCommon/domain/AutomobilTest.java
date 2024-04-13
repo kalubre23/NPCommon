@@ -130,6 +130,11 @@ class AutomobilTest {
 	}
 	
 	@Test
+	void testEqualsNull() {
+		assertFalse(a.equals(null));
+	}
+	
+	@Test
 	void testEqualsDrugaKlasa() {
 		assertFalse(a.equals(new RuntimeException()));
 	}

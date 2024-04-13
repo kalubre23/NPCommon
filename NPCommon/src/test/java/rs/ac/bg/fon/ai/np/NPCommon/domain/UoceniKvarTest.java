@@ -127,6 +127,11 @@ class UoceniKvarTest {
 	}
 	
 	@Test
+	void testEqualsNull() {
+		assertFalse(uk.equals(null));
+	}
+	
+	@Test
 	void testEqualsDrugaKlasa() {
 		assertFalse(uk.equals(new RuntimeException()));
 	}
