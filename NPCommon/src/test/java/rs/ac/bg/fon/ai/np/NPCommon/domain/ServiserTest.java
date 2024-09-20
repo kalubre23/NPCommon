@@ -10,11 +10,11 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 
 class ServiserTest {
-	Serviser s;
+	Korisnik s;
 
 	@BeforeEach
 	void setUp() throws Exception {
-		s = new Serviser();
+		s = new Korisnik();
 	}
 
 	@AfterEach
@@ -122,7 +122,7 @@ class ServiserTest {
 		s.setUsername(username1);
 		s.setPassword(pass1);
 		
-		Serviser s2 = new Serviser();
+		Korisnik s2 = new Korisnik();
 		s2.setUsername(username2);
 		s2.setPassword(pass2);
 		

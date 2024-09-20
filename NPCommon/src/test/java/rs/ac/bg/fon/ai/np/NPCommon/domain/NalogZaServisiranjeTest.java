@@ -32,7 +32,7 @@ class NalogZaServisiranjeTest {
 
 	@Test
 	void testSetServiserOk() {
-		Serviser s = new Serviser();
+		Korisnik s = new Korisnik();
 		s.setUsername("luka123");
 		s.setPassword("Luka12345.");
 		n.setServiser(s);

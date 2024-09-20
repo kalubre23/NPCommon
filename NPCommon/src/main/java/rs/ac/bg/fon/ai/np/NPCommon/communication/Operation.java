@@ -33,4 +33,5 @@ public enum Operation {
     OBRISI_VLASNIKA,
     PRONADJI_VLASNIKE,
     IZMENI_VLASNIKA,
+    VRATI_SVE_SERVISERE
 }

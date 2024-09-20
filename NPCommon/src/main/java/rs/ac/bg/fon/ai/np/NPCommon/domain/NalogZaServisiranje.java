@@ -34,7 +34,11 @@ public class NalogZaServisiranje extends DomenskiObjekat implements Serializable
     /**
      * Datum servisiranja automobila tipa LocalDate.
      */
-    private LocalDate datum;
+    private LocalDate datumKreiranja;
+    
+    private LocalDate datumIzvrsenja;
+    
+    private short status = 0; // po default-u je 0
     /**
      * Cena servisa kao double.
      */
@@ -46,7 +50,7 @@ public class NalogZaServisiranje extends DomenskiObjekat implements Serializable
     /**
      * Serviser koji je zakljucio nalog kao instanca klase Serviser.
      */
-    private Serviser serviser;
+    private Korisnik serviser;
 
     /**
      * Prazan konstruktor za kreiranje jedne instance naloga sa podrazumevanim vrednostima za njegove atribute.
@@ -60,12 +64,12 @@ public class NalogZaServisiranje extends DomenskiObjekat implements Serializable
      * @param datum - Datum servisiranja koji se dodeljuje instanci naloga pri kreiranju.
      * @param cena - Cena servisa koje se dodeljuje instanci naloga pri kreiranju.
      * @param kvar - Kvar na koji se odnosi servis, koji se dodeljuje instanci naloga pri kreiranju.
-     * @param serviser - Serviser koji je zakljucio nalog, koji se dodeljuje instanci naloga pri kreiranju.
+     * @param serviser - Serviser koji obradjuje nalog, koji se dodeljuje instanci naloga pri kreiranju.
      */
     public NalogZaServisiranje(int nalogID, LocalDate datum, 
-         double cena, UoceniKvar kvar, Serviser serviser) {
+         double cena, UoceniKvar kvar, Korisnik serviser) {
         setNalogID(nalogID);
-        setDatum(datum);
+        setDatumKreiranja(datum);
         setCena(cena);
         setKvar(kvar);
         setServiser(serviser);
@@ -75,7 +79,7 @@ public class NalogZaServisiranje extends DomenskiObjekat implements Serializable
      * Vraca servisera koji je zakljucio nalog.
      * @return serviser koji je zakljucio nalog tipa Serviser.
      */
-    public Serviser getServiser() {
+    public Korisnik getServiser() {
         return serviser;
     }
 
@@ -85,7 +89,7 @@ public class NalogZaServisiranje extends DomenskiObjekat implements Serializable
      * @param serviser kao nova vrednost atributa serviser.
      * @throws NullPointerException ako je uneta vrednost null.
      */
-    public void setServiser(Serviser serviser) {
+    public void setServiser(Korisnik serviser) {
     	if(serviser==null) {
     		throw new NullPointerException("Serviser ne moze biti null");
     	}
@@ -133,12 +137,29 @@ public class NalogZaServisiranje extends DomenskiObjekat implements Serializable
         this.nalogID = nalogID;
     }
 
+    public LocalDate getDatumIzvrsenja() {
+        return datumIzvrsenja;
+    }
+
+    public void setDatumIzvrsenja(LocalDate datumIzvrsenja) {
+        this.datumIzvrsenja = datumIzvrsenja;
+    }
+
+    public short getStatus() {
+        return status;
+    }
+
+    public void setStatus(short status) {
+        this.status = status;
+    }
+    
+
     /**
      * Vraca datum servisiranja tj datum kada je zakljucen(kreiran) nalog.
      * @return datum servisiranja tipa LocalDate.
      */
-    public LocalDate getDatum() {
-        return datum;
+    public LocalDate getDatumKreiranja() {
+        return datumKreiranja;
     }
 
     /**
@@ -149,12 +170,12 @@ public class NalogZaServisiranje extends DomenskiObjekat implements Serializable
      * @throws NullPointerException ako je uneta vrednost null.
      * @throws IllegalArgumentException ako se uneti datum odnosi na buducnost.
      */
-    public void setDatum(LocalDate datum) {
+    public void setDatumKreiranja(LocalDate datum) {
     	if(datum == null)
-    		throw new NullPointerException("Datum naloga ne sme biti null!");
+    		throw new NullPointerException("Datum kreiranja naloga ne sme biti null!");
     	if(datum.isAfter(LocalDate.now()))
-    		throw new IllegalArgumentException("Datum naloga ne sme da bude u buducnosti!");
-        this.datum = datum;
+    		throw new IllegalArgumentException("Datum kreiranja naloga ne sme da bude u buducnosti!");
+        this.datumKreiranja = datum;
     }
 
     /**
@@ -218,31 +239,32 @@ public class NalogZaServisiranje extends DomenskiObjekat implements Serializable
                                 "INNER JOIN vlasnik AS v ON a.vlasnikid=v.vlasnikid "+
                                 "INNER JOIN marka AS m ON a.markaid=m.markaid "+
                                 "INNER JOIN uocenikvar AS uk ON n.kvarid=uk.kvarid "+
-                                "INNER JOIN serviseri AS s ON n.serviserid=s.serviserid " : "nalog ";
+                                "INNER JOIN korisnici AS k ON n.serviserid=k.korisnik_id " : "nalog ";
     }
 
     @Override
     public String getKoloneZaInsert() {
-        return "datum, cena, tablice, kvarid, serviserid";
+        return "datum_kreiranja, cena, tablice, kvarid, serviserid, status";
     }
 
     @Override
     public String vratiVrednostiZaInsert() {
-        return "?,?,?,?,?";
+        return "?,?,?,?,?,?";
     }
 
     @Override
     public String vratiVrednostiZaSelect() {
-        return "nalogid, datum, cena, n.tablice, a.vlasnikid, v.ime, v.prezime, v.email, v.telefon, a.godiste, a.markaid, m.naziv, n.kvarid, uk.opis, n.serviserid, s.ime, s.prezime, s.username";
+        return "nalogid, datum, cena, status, n.tablice, a.vlasnikid, v.ime, v.prezime, v.email, v.telefon, a.godiste, a.markaid, m.naziv, n.kvarid, uk.opis, n.serviserid, k.ime, k.prezime, k.username";
     }
 
     @Override
     public void postaviVrednostiZaInsert(PreparedStatement statement, DomenskiObjekat domainObject) throws SQLException {
-        statement.setDate(1, java.sql.Date.valueOf((LocalDate) ((NalogZaServisiranje) domainObject).getDatum()));
+        statement.setDate(1, java.sql.Date.valueOf((LocalDate) ((NalogZaServisiranje) domainObject).getDatumKreiranja()));
         statement.setDouble(2, ((NalogZaServisiranje) domainObject).getCena());
         statement.setString(3, ((NalogZaServisiranje) domainObject).getKvar().getAutomobil().getTablice());
         statement.setInt(4, ((NalogZaServisiranje) domainObject).getKvar().getKvarID());
-        statement.setInt(5, ((NalogZaServisiranje) domainObject).getServiser().getServiserID());
+        statement.setInt(5, ((NalogZaServisiranje) domainObject).getServiser().getKorisnikId());
+        statement.setInt(6, ((NalogZaServisiranje) domainObject).getStatus());
     }
 
     @Override
@@ -265,7 +287,7 @@ public class NalogZaServisiranje extends DomenskiObjekat implements Serializable
                 Vlasnik vlasnik = new Vlasnik(rs.getInt("a.vlasnikid"), rs.getString("v.ime"), rs.getString("v.prezime"), rs.getString("v.email"), rs.getString("v.telefon"));
                 Automobil automobil = new Automobil(rs.getString("n.tablice"), vlasnik, rs.getInt("a.godiste"), marka, new ArrayList<>());
                 UoceniKvar uk = new UoceniKvar(automobil, rs.getInt("n.kvarid"), rs.getString("uk.opis"));
-                Serviser s = new Serviser(rs.getInt("n.serviserid"), rs.getString("s.ime"), rs.getString("s.prezime"), rs.getString("s.username"), "missing");
+                Korisnik s = new Korisnik(rs.getInt("n.serviserid"), rs.getString("k.ime"), rs.getString("k.prezime"), rs.getString("k.username"), "not available", null);
                 NalogZaServisiranje nalog = new NalogZaServisiranje(rs.getInt("nalogid"), rs.getDate("datum").toLocalDate(), rs.getDouble("cena"), uk, s);
                 lista.add(nalog);
                 System.out.println(nalog);

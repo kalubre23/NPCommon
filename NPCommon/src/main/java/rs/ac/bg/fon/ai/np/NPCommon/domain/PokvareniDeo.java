@@ -248,15 +248,15 @@ public class PokvareniDeo extends DomenskiObjekat implements Serializable {
 
     @Override
     public String vratiVrednostiZaUpdate() {
-        return "tablice=?, kvarid=?, deoid=?, cena=?";
+        return "cena=?";
     }
 
     @Override
     public void postaviVrednostiZaUpdate(PreparedStatement statement, DomenskiObjekat domainObject) throws SQLException {
-        statement.setString(1, ((PokvareniDeo)domainObject).getUoceniKvar().getAutomobil().getTablice());
-        statement.setInt(2, ((PokvareniDeo)domainObject).getUoceniKvar().getKvarID());
-        statement.setInt(3, ((PokvareniDeo)domainObject).getDeo().getDeoID());
-        statement.setDouble(4, ((PokvareniDeo)domainObject).getCena());
+//        statement.setString(1, ((PokvareniDeo)domainObject).getUoceniKvar().getAutomobil().getTablice());
+//        statement.setInt(2, ((PokvareniDeo)domainObject).getUoceniKvar().getKvarID());
+//        statement.setInt(3, ((PokvareniDeo)domainObject).getDeo().getDeoID());
+        statement.setDouble(1, ((PokvareniDeo)domainObject).getCena());
     }
 
     @Override

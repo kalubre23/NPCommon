@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.logging.Level;
@@ -23,12 +24,12 @@ import javax.sql.RowSetReader;
  * @author Luka Obrenic
  * @since 1.0.0
  */
-public class Serviser extends DomenskiObjekat implements Serializable {
+public class Korisnik extends DomenskiObjekat implements Serializable {
 
 	/**
 	 * Jedinstveni identifikator servisera kao int.
 	 */
-    private int serviserID;
+    private int korisnikId;
     /**
      * Ime servisera kao string.
      */
@@ -45,11 +46,24 @@ public class Serviser extends DomenskiObjekat implements Serializable {
      * Password za login kao string.
      */
     private String password;
+    /**
+     * Uloga korisnika, tipa Uloga.
+     * @see Uloga
+     */
+    private Uloga uloga;
+
+    public Uloga getUloga() {
+        return uloga;
+    }
+
+    public void setUloga(Uloga uloga) {
+        this.uloga = uloga;
+    }
 
     /**
      * Prazan konstruktor za kreiranje jedne instance servisera sa podrazumevanim vrednostima za njegove atribute.
      */
-    public Serviser() {
+    public Korisnik() {
     }
 
     /**
@@ -61,13 +75,14 @@ public class Serviser extends DomenskiObjekat implements Serializable {
      * @param username - Username koji se dodeljuje instanci servisera pri kreiranju.
      * @param password - Password koje se dodeljuje instanci servisera pri kreiranju.
      */
-    public Serviser(int serviserID, String ime, String prezime,
-         String username, String password) {
-        setServiserID(serviserID);
+    public Korisnik(int korisnikId, String ime, String prezime,
+         String username, String password, Uloga uloga) {
+        setKorisnikID(korisnikId);
         setIme(ime);
         setPrezime(prezime);
         setUsername(username);
         setPassword(password);
+        setUloga(uloga);
     }
 
     /**
@@ -76,7 +91,7 @@ public class Serviser extends DomenskiObjekat implements Serializable {
      * @param username - Username koji se dodeljuje instanci servisera pri kreiranju.
      * @param password - Password koje se dodeljuje instanci servisera pri kreiranju.
      */
-    public Serviser(String username, String password) {
+    public Korisnik(String username, String password) {
         setUsername(username);
         setPassword(password);
     }
@@ -90,19 +105,9 @@ public class Serviser extends DomenskiObjekat implements Serializable {
      */
     @Override
     public String toString() {
-        return "Serviser{" + "serviserID: " + serviserID + ", ime: " + ime + ", prezime: " + prezime + ", username: " + username + ", password: " + password + '}';
+        return this.ime + " " + this.prezime;
     }
 
-//    @Override
-//    public int hashCode() {
-//        int hash = 7;
-//        hash = 23 * hash + Objects.hashCode(this.serviserID);
-//        hash = 23 * hash + Objects.hashCode(this.ime);
-//        hash = 23 * hash + Objects.hashCode(this.prezime);
-//        hash = 23 * hash + Objects.hashCode(this.username);
-//        hash = 23 * hash + Objects.hashCode(this.password);
-//        return hash;
-//    }
     
     /**
 	 * Poredi dva servisera prema username-u i password-u.
@@ -125,7 +130,7 @@ public class Serviser extends DomenskiObjekat implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Serviser other = (Serviser) obj;
+        final Korisnik other = (Korisnik) obj;
         if (!Objects.equals(this.username, other.username)) {
             return false;
         }
@@ -136,29 +141,29 @@ public class Serviser extends DomenskiObjekat implements Serializable {
      * Vraca jedinstveni identifikator servisera.
      * @return serviserID identifikator kao int.
      */
-    public int getServiserID() {
-        return serviserID;
+    public int getKorisnikId() {    
+        return korisnikId;
     }
 
     /**
-     * Postavlja novu vrednost za jedinstveni identifikator servisera.
+     * Postavlja novu vrednost za jedinstveni identifikator korisnika.
      * 
      * Jedinstveni identifikator ne sme biti manji od nule.
      * 
-     * @param serviserID kao nova vrednost identifikatora.
+     * @param korisnikID kao nova vrednost identifikatora.
      * 
      * @throws IllegalArgumentException ako je uneta vrednost manja od nule.
      */
-    public void setServiserID(int serviserID) {
-    	if(serviserID<0) {
-    		throw new IllegalArgumentException("serviserID ne sme biti < 0");
-    	}
-        this.serviserID = serviserID;
+    public void setKorisnikID(int korisnikID) {
+        if(korisnikID<0) {
+            throw new IllegalArgumentException("korisnikID ne sme biti < 0");
+        }
+        this.korisnikId = korisnikID;
     }
 
     /**
-     * Vraca ime servisera.
-     * @return ime servisera kao string.
+     * Vraca ime korisnika.
+     * @return ime korisnika kao string.
      */
     public String getIme() {
         return ime;
@@ -169,21 +174,21 @@ public class Serviser extends DomenskiObjekat implements Serializable {
 	 * 
 	 * Ime ne sme biti null niti prazan string.
 	 * 
-	 * @param ime nova vrednost za ime servisera
+	 * @param ime nova vrednost za ime korisnika
 	 * @throws NullPointerException ako se unese null vrednost
 	 * @throws IllegalArgumentException ako se unese prazan string
 	 */
     public void setIme(String ime) {
     	if(ime == null) 
-    		throw new NullPointerException("Ime servisera ne sme biti null");
+    		throw new NullPointerException("Ime korisnika ne sme biti null");
     	if(ime.isEmpty())
-    		throw new IllegalArgumentException("Ime servisera ne sme biti prazan string!");
+    		throw new IllegalArgumentException("Ime korisnika ne sme biti prazan string!");
         this.ime = ime;
     }
 
     /**
-     * Vraca prezime servisera.
-     * @return prezime servisera kao string.
+     * Vraca prezime korisnika.
+     * @return prezime korisnika kao string.
      */
     public String getPrezime() {
         return prezime;
@@ -200,15 +205,15 @@ public class Serviser extends DomenskiObjekat implements Serializable {
 	 */
     public void setPrezime(String prezime) {
     	if(prezime == null) 
-    		throw new NullPointerException("Prezime servisera ne sme biti null");
+    		throw new NullPointerException("Prezime korisnika ne sme biti null");
     	if(prezime.isEmpty())
-    		throw new IllegalArgumentException("Prezime servisera ne sme biti prazan string!");
+    		throw new IllegalArgumentException("Prezime korisnika ne sme biti prazan string!");
         this.prezime = prezime;
     }
 
     /**
-     * Vraca username za logovanje servisera.
-     * @return username servisera kao string.
+     * Vraca username za logovanje korisnika.
+     * @return username korisnika kao string.
      */
     public String getUsername() {
         return username;
@@ -225,15 +230,15 @@ public class Serviser extends DomenskiObjekat implements Serializable {
 	 */
     public void setUsername(String username) {
     	if(username== null) 
-    		throw new NullPointerException("Username servisera ne sme biti null!");
+    		throw new NullPointerException("Username korisnika ne sme biti null!");
     	if(username.isEmpty())
-    		throw new IllegalArgumentException("Username servisera ne sme biti prazan string");
+    		throw new IllegalArgumentException("Username korisnika ne sme biti prazan string");
         this.username = username;
     }
 
     /**
-     * Vraca password za logovanje servisera.
-     * @return password servisera kao string.
+     * Vraca password za logovanje korisnika.
+     * @return password korisnika kao string.
      */
     public String getPassword() {
         return password;
@@ -250,15 +255,15 @@ public class Serviser extends DomenskiObjekat implements Serializable {
 	 */
     public void setPassword(String password) {
     	if(password== null) 
-    		throw new NullPointerException("Password servisera ne sme biti null!");
+    		throw new NullPointerException("Password korisnika ne sme biti null!");
     	if(password.isEmpty())
-    		throw new IllegalArgumentException("Password servisera ne sme biti prazan string");
+    		throw new IllegalArgumentException("Password korisnika ne sme biti prazan string");
         this.password = password;
     }
 
     @Override
     public String vratiNazivTabele() {
-        return "serviseri";
+        return "korisnici INNER JOIN uloge ON uloge.uloga_id = korisnici.uloga_id";
     }
 
     @Override
@@ -273,7 +278,7 @@ public class Serviser extends DomenskiObjekat implements Serializable {
 
     @Override
     public String vratiVrednostiZaSelect() {
-        return "serviserid, ime, prezime, username, password";
+        return "korisnik_id, ime, prezime, username, uloge.uloga_id, uloge.naziv";
     }
 
     @Override
@@ -282,6 +287,23 @@ public class Serviser extends DomenskiObjekat implements Serializable {
 
     @Override
     public List<DomenskiObjekat> vratiListuSvih(ResultSet rs) {
+        List<DomenskiObjekat> serviseri = new ArrayList<>();
+        try {
+            while(rs.next()){
+                Korisnik k = new Korisnik();
+                k.setKorisnikID(rs.getInt(1));
+                k.setIme(rs.getString(2));
+                k.setPrezime(rs.getString(3));
+                k.setUsername(rs.getString(4));
+                Uloga u = new Uloga(rs.getInt(5), rs.getString(6));
+                k.setUloga(u);
+                serviseri.add(k);
+            }
+            return serviseri;
+        } catch (SQLException ex) {
+            System.out.println("Nasledjena metoda vratiListuSvih(ResultSet rs) u klasi 'Korisnik' pukla!");
+            Logger.getLogger(Marka.class.getName()).log(Level.SEVERE, null, ex);
+        }
         return null;
     }
 
@@ -303,17 +325,19 @@ public class Serviser extends DomenskiObjekat implements Serializable {
 
     @Override
     public void postaviVrednostiZaSelect(PreparedStatement statement, DomenskiObjekat domainObject) throws SQLException {
-        statement.setString(1, ((Serviser) domainObject).getUsername());
-        statement.setString(2, ((Serviser) domainObject).getPassword());
+        statement.setString(1, ((Korisnik) domainObject).getUsername());
+        statement.setString(2, ((Korisnik) domainObject).getPassword());
+        statement.setString(3, ((Korisnik) domainObject).getUloga().getUloga());
     }
 
     @Override
     public DomenskiObjekat vratiJednog(ResultSet rs, DomenskiObjekat objekat) {
         try {
             if (rs.next()) {
-                ((Serviser)objekat).setServiserID(rs.getInt("serviserid"));
-                ((Serviser)objekat).setIme(rs.getString("ime"));
-                ((Serviser)objekat).setPrezime(rs.getString("prezime"));
+                ((Korisnik)objekat).setKorisnikID(rs.getInt("korisnik_id"));
+                ((Korisnik)objekat).setIme(rs.getString("ime"));
+                ((Korisnik)objekat).setPrezime(rs.getString("prezime"));
+
             } else {
                 //ovde je pukao
                 //nema takvog onda trebad a se baci exception mozda
@@ -323,7 +347,7 @@ public class Serviser extends DomenskiObjekat implements Serializable {
             
         } catch (SQLException ex) {
             System.out.println("vratiJednog kod Serviser pukla");
-            Logger.getLogger(Serviser.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(Korisnik.class.getName()).log(Level.SEVERE, null, ex);
         }
         return objekat;
     }
@@ -335,17 +359,17 @@ public class Serviser extends DomenskiObjekat implements Serializable {
 
     @Override
     public void postaviAutoIncrementPrimaryKey(int primaryKey) {
-        this.serviserID = primaryKey;
+        this.korisnikId = primaryKey;
     }
 
     @Override
     public String vratiUslovZaJednog() {
-        return "username=? AND password=?";
+        return "username=? AND password=? AND uloge.naziv=?";
     }
 
     @Override
     public String vratiUslovZaVise() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "uloge.naziv='serviser'";
     }
 
     @Override
