@@ -266,7 +266,8 @@ public class PokvareniDeo extends DomenskiObjekat implements Serializable {
 
     @Override
     public String vratiUslovZaVise() {
-        return "LOWER(a.tablice) LIKE '" + this.uoceniKvar.getAutomobil().getTablice() + "%'";
+        return this.getUoceniKvar().getKvarID()==0 ? "LOWER(a.tablice) LIKE '" + this.uoceniKvar.getAutomobil().getTablice() + "%'" 
+             : "a.tablice='"+this.getUoceniKvar().getAutomobil().getTablice()+"' AND pd.kvarid="+this.getUoceniKvar().getKvarID();
     }
 
     @Override

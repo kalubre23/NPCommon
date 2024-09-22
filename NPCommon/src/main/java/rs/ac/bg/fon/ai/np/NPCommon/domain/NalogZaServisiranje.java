@@ -7,10 +7,12 @@ package rs.ac.bg.fon.ai.np.NPCommon.domain;
 import java.io.Serializable;
 import java.lang.System.Logger;
 import java.lang.System.Logger.Level;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -66,10 +68,10 @@ public class NalogZaServisiranje extends DomenskiObjekat implements Serializable
      * @param kvar - Kvar na koji se odnosi servis, koji se dodeljuje instanci naloga pri kreiranju.
      * @param serviser - Serviser koji obradjuje nalog, koji se dodeljuje instanci naloga pri kreiranju.
      */
-    public NalogZaServisiranje(int nalogID, LocalDate datum, 
+    public NalogZaServisiranje(int nalogID, LocalDate datumKreiranja, 
          double cena, UoceniKvar kvar, Korisnik serviser) {
         setNalogID(nalogID);
-        setDatumKreiranja(datum);
+        setDatumKreiranja(datumKreiranja);
         setCena(cena);
         setKvar(kvar);
         setServiser(serviser);
@@ -254,7 +256,7 @@ public class NalogZaServisiranje extends DomenskiObjekat implements Serializable
 
     @Override
     public String vratiVrednostiZaSelect() {
-        return "nalogid, datum, cena, status, n.tablice, a.vlasnikid, v.ime, v.prezime, v.email, v.telefon, a.godiste, a.markaid, m.naziv, n.kvarid, uk.opis, n.serviserid, k.ime, k.prezime, k.username";
+        return "nalogid, datum_kreiranja, datum_izvrsenja, cena, status, n.tablice, a.vlasnikid, v.ime, v.prezime, v.email, v.telefon, a.godiste, a.markaid, m.naziv, n.kvarid, uk.opis, n.serviserid, k.ime, k.prezime, k.username";
     }
 
     @Override
@@ -288,7 +290,15 @@ public class NalogZaServisiranje extends DomenskiObjekat implements Serializable
                 Automobil automobil = new Automobil(rs.getString("n.tablice"), vlasnik, rs.getInt("a.godiste"), marka, new ArrayList<>());
                 UoceniKvar uk = new UoceniKvar(automobil, rs.getInt("n.kvarid"), rs.getString("uk.opis"));
                 Korisnik s = new Korisnik(rs.getInt("n.serviserid"), rs.getString("k.ime"), rs.getString("k.prezime"), rs.getString("k.username"), "not available", null);
-                NalogZaServisiranje nalog = new NalogZaServisiranje(rs.getInt("nalogid"), rs.getDate("datum").toLocalDate(), rs.getDouble("cena"), uk, s);
+                NalogZaServisiranje nalog = new NalogZaServisiranje(rs.getInt("nalogid"), rs.getDate("datum_kreiranja").toLocalDate(), rs.getDouble("cena"), uk, s);
+                Date datummIzvrsenja = rs.getDate("datum_izvrsenja");
+                nalog.setStatus((short) rs.getInt("status"));
+                if(datummIzvrsenja != null){
+                    nalog.setDatumIzvrsenja(datummIzvrsenja.toLocalDate());
+                } else {
+                    nalog.setDatumIzvrsenja(null);
+                }
+                
                 lista.add(nalog);
                 System.out.println(nalog);
             }
@@ -306,12 +316,18 @@ public class NalogZaServisiranje extends DomenskiObjekat implements Serializable
 
     @Override
     public String vratiVrednostiZaUpdate() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return "status=?, datum_izvrsenja=?";
     }
 
     @Override
     public void postaviVrednostiZaUpdate(PreparedStatement statement, DomenskiObjekat domainObject) throws SQLException {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        LocalDate datumIzvrsavanja = ((NalogZaServisiranje)domainObject).getDatumIzvrsenja();
+        statement.setInt(1, ((NalogZaServisiranje)domainObject).getStatus());
+        if(datumIzvrsavanja == null){
+            statement.setDate(2, null);
+        }else {
+            statement.setDate(2, java.sql.Date.valueOf(datumIzvrsavanja));
+        }
     }
 
     @Override
@@ -321,7 +337,8 @@ public class NalogZaServisiranje extends DomenskiObjekat implements Serializable
 
     @Override
     public String vratiUslovZaVise() {
-        return "LOWER(n.tablice) LIKE '" + this.kvar.getAutomobil().getTablice() + "%'";
+        return this.serviser==null ? "LOWER(n.tablice) LIKE '" + this.kvar.getAutomobil().getTablice() + "%'" + " ORDER BY datum_kreiranja DESC"
+             : "n.serviserid=" + this.serviser.getKorisnikId() + " ORDER BY datum_kreiranja DESC";
     }
 
     @Override
