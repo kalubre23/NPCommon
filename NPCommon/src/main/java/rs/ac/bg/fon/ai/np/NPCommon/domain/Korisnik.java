@@ -14,10 +14,8 @@ import java.util.Objects;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import javax.sql.RowSetReader;
-
 /**
- * Predstavlja servisera koji radi u auto servisu.
+ * Predstavlja korisnika aplikacije.
  * 
  * Ima username i password pomocu kojih se loguje u sistem, ime, prezime kao i jedinstveni identifikator.
  *
@@ -26,16 +24,16 @@ import javax.sql.RowSetReader;
  */
 public class Korisnik extends DomenskiObjekat implements Serializable {
 
-	/**
-	 * Jedinstveni identifikator servisera kao int.
-	 */
+    /**
+     * Jedinstveni identifikator korisnika kao int.
+     */
     private int korisnikId;
     /**
-     * Ime servisera kao string.
+     * Ime korisnika kao string.
      */
     private String ime;
     /**
-     * Prezime servisera kao string.
+     * Prezime korisnika kao string.
      */
     private String prezime;
     /**
@@ -52,28 +50,41 @@ public class Korisnik extends DomenskiObjekat implements Serializable {
      */
     private Uloga uloga;
 
+    /**
+     * Vraca ulogu korisnika.
+     * @return uloga korisnika, tipa Uloga.
+     * @see Uloga
+     */
     public Uloga getUloga() {
         return uloga;
     }
 
+    /**
+    * Postavlja novu ulogu korisnika.
+    * 
+    * Uloga ne sme biti null.
+    * 
+    * @param uloga nova vrednost za ulogu korisnika
+    * @throws NullPointerException ako se unese null vrednost
+    */
     public void setUloga(Uloga uloga) {
         this.uloga = uloga;
     }
 
     /**
-     * Prazan konstruktor za kreiranje jedne instance servisera sa podrazumevanim vrednostima za njegove atribute.
+     * Prazan konstruktor za kreiranje jedne instance korisnika sa podrazumevanim vrednostima za njegove atribute.
      */
     public Korisnik() {
     }
 
     /**
-     * Parametrizovani konstruktor koji sluzi za kreiranje instance servisera sa specificnim vrednostima za sve njegove atribute.
+     * Parametrizovani konstruktor koji sluzi za kreiranje instance korisnika sa specificnim vrednostima za sve njegove atribute.
      * 
-     * @param serviserID - Jedinstveni identifikator koji se dodeljuje instanci servisera pri kreiranju.
-     * @param ime - Ime koje se dodeljuje instanci servisera pri kreiranju.
-     * @param prezime - Prezime koje se dodeljuje instanci servisera pri kreiranju.
-     * @param username - Username koji se dodeljuje instanci servisera pri kreiranju.
-     * @param password - Password koje se dodeljuje instanci servisera pri kreiranju.
+     * @param korisnikId - Jedinstveni identifikator koji se dodeljuje instanci korisnika pri kreiranju.
+     * @param ime - Ime koje se dodeljuje instanci korisnika pri kreiranju.
+     * @param prezime - Prezime koje se dodeljuje instanci korisnika pri kreiranju.
+     * @param username - Username koji se dodeljuje instanci korisnika pri kreiranju.
+     * @param password - Password koje se dodeljuje instanci korisnika pri kreiranju.
      */
     public Korisnik(int korisnikId, String ime, String prezime,
          String username, String password, Uloga uloga) {
@@ -86,10 +97,10 @@ public class Korisnik extends DomenskiObjekat implements Serializable {
     }
 
     /**
-     * Parametrizovani konstruktor koji sluzi za kreiranje instance servisera sa specificnim vrednostima za atribute username i password.
+     * Parametrizovani konstruktor koji sluzi za kreiranje instance korisnika sa specificnim vrednostima za atribute username i password.
      * 
-     * @param username - Username koji se dodeljuje instanci servisera pri kreiranju.
-     * @param password - Password koje se dodeljuje instanci servisera pri kreiranju.
+     * @param username - Username koji se dodeljuje instanci korisnika pri kreiranju.
+     * @param password - Password koje se dodeljuje instanci korisnika pri kreiranju.
      */
     public Korisnik(String username, String password) {
         setUsername(username);
@@ -97,11 +108,11 @@ public class Korisnik extends DomenskiObjekat implements Serializable {
     }
 
     /**
-     * Vraca string reprezentaciju servisera.
+     * Vraca string reprezentaciju korisnika.
      * 
-     * Sastoji se od jedinstvenog identifikatora, imena, prezimena, username-a i sifre.
+     * Sastoji se od imena i prezimena..
      * 
-     * @return serviser kao string reprezentacija servisera u odgovarajucem formatu.
+     * @return korisnik kao string reprezentacija korisnika u odgovarajucem formatu.
      */
     @Override
     public String toString() {
@@ -110,15 +121,15 @@ public class Korisnik extends DomenskiObjekat implements Serializable {
 
     
     /**
-	 * Poredi dva servisera prema username-u i password-u.
-	 * 
-	 * 
-	 * @return
-	 * <ul>
-	 * 		<li> true ako je unet isti objekat ili ako su username i password isti </li>
-	 * 		<li> false ako je unet null, ako objekat nije klase Serviser ili ako su razliciti username i/ili password</li>
-	 * <ul>
-	 */
+    * Poredi dva korisnika prema username-u i password-u.
+    * 
+    * 
+    * @return
+    * <ul>
+    * 		<li> true ako je unet isti objekat ili ako su username i password isti </li>
+    * 		<li> false ako je unet null, ako objekat nije klase Korisnik ili ako su razliciti username i/ili password</li>
+    * <ul>
+    */
     @Override
     public boolean equals(Object obj) {
         if (this == obj) {
@@ -138,8 +149,8 @@ public class Korisnik extends DomenskiObjekat implements Serializable {
     }
 
     /**
-     * Vraca jedinstveni identifikator servisera.
-     * @return serviserID identifikator kao int.
+     * Vraca jedinstveni identifikator korisnika.
+     * @return korisnikId identifikator kao int.
      */
     public int getKorisnikId() {    
         return korisnikId;
@@ -170,14 +181,14 @@ public class Korisnik extends DomenskiObjekat implements Serializable {
     }
 
     /**
-	 * Postavlja novu vrednost atributa ime.
-	 * 
-	 * Ime ne sme biti null niti prazan string.
-	 * 
-	 * @param ime nova vrednost za ime korisnika
-	 * @throws NullPointerException ako se unese null vrednost
-	 * @throws IllegalArgumentException ako se unese prazan string
-	 */
+    * Postavlja novu vrednost atributa ime.
+    * 
+    * Ime ne sme biti null niti prazan string.
+    * 
+    * @param ime nova vrednost za ime korisnika
+    * @throws NullPointerException ako se unese null vrednost
+    * @throws IllegalArgumentException ako se unese prazan string
+    */
     public void setIme(String ime) {
     	if(ime == null) 
     		throw new NullPointerException("Ime korisnika ne sme biti null");
@@ -195,14 +206,14 @@ public class Korisnik extends DomenskiObjekat implements Serializable {
     }
 
     /**
-	 * Postavlja novu vrednost atributa prezime.
-	 * 
-	 * Prezime ne sme biti null niti prazan string.
-	 * 
-	 * @param prezime nova vrednost za prezime servisera
-	 * @throws NullPointerException ako se unese null vrednost
-	 * @throws IllegalArgumentException ako se unese prazan string
-	 */
+    * Postavlja novu vrednost atributa prezime.
+    * 
+    * Prezime ne sme biti null niti prazan string.
+    * 
+    * @param prezime nova vrednost za prezime korisnika
+    * @throws NullPointerException ako se unese null vrednost
+    * @throws IllegalArgumentException ako se unese prazan string
+    */
     public void setPrezime(String prezime) {
     	if(prezime == null) 
     		throw new NullPointerException("Prezime korisnika ne sme biti null");
@@ -220,14 +231,14 @@ public class Korisnik extends DomenskiObjekat implements Serializable {
     }
 
     /**
-	 * Postavlja novu vrednost atributa username.
-	 * 
-	 * Username ne sme biti null niti prazan string.
-	 * 
-	 * @param username nova vrednost za username servisera
-	 * @throws NullPointerException ako se unese null vrednost
-	 * @throws IllegalArgumentException ako se unese prazan string
-	 */
+    * Postavlja novu vrednost atributa username.
+    * 
+    * Username ne sme biti null niti prazan string.
+    * 
+    * @param username nova vrednost za username korisnika
+    * @throws NullPointerException ako se unese null vrednost
+    * @throws IllegalArgumentException ako se unese prazan string
+    */
     public void setUsername(String username) {
     	if(username== null) 
     		throw new NullPointerException("Username korisnika ne sme biti null!");
@@ -245,14 +256,14 @@ public class Korisnik extends DomenskiObjekat implements Serializable {
     }
 
     /**
-	 * Postavlja novu vrednost atributa password.
-	 * 
-	 * Password ne sme biti null niti prazan string.
-	 * 
-	 * @param password nova vrednost za password servisera
-	 * @throws NullPointerException ako se unese null vrednost
-	 * @throws IllegalArgumentException ako se unese prazan string
-	 */
+    * Postavlja novu vrednost atributa password.
+    * 
+    * Password ne sme biti null niti prazan string.
+    * 
+    * @param password nova vrednost za password korisnika
+    * @throws NullPointerException ako se unese null vrednost
+    * @throws IllegalArgumentException ako se unese prazan string
+    */
     public void setPassword(String password) {
     	if(password== null) 
     		throw new NullPointerException("Password korisnika ne sme biti null!");
@@ -341,12 +352,12 @@ public class Korisnik extends DomenskiObjekat implements Serializable {
             } else {
                 //ovde je pukao
                 //nema takvog onda trebad a se baci exception mozda
-                System.out.println("U serviseru je objekat=null");
+                System.out.println("U korisniku je objekat=null");
                 objekat = null;
             }
             
         } catch (SQLException ex) {
-            System.out.println("vratiJednog kod Serviser pukla");
+            System.out.println("vratiJednog kod Korisnik pukla");
             Logger.getLogger(Korisnik.class.getName()).log(Level.SEVERE, null, ex);
         }
         return objekat;

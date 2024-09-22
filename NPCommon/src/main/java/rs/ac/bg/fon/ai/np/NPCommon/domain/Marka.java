@@ -22,9 +22,9 @@ import java.util.logging.Logger;
  * @since 1.0.0
  */
 public class Marka extends DomenskiObjekat implements Serializable{
-	/**
-	 * Jedinstven identifikator marke automobila kao int.
-	 */
+    /**
+     * Jedinstven identifikator marke automobila kao int.
+     */
     private int markaID;
     /**
      * Naziv marke automobila kao string.
@@ -74,20 +74,20 @@ public class Marka extends DomenskiObjekat implements Serializable{
     }
 
     /**
-     * Vraca jedinstven identifikator marke automobila.
-     * @return markaID kao jednistveni identifikator marke automobila kao int.
-     */
+    * Vraca jedinstven identifikator marke automobila.
+    * @return markaID kao jednistveni identifikator marke automobila kao int.
+    */
     public int getMarkaID() {
         return markaID;
     }
 
     /**
-     * Postavlja novu vrednost za jedinstveni identifikator marke automobila.
-     * 
-     * @param markaID kao nova vrednost atributa markaID.
-     * 
-     * @throws IllegalArgumentException ako je uneta vrednost manja od nule.
-     */
+    * Postavlja novu vrednost za jedinstveni identifikator marke automobila.
+    * 
+    * @param markaID kao nova vrednost atributa markaID.
+    * 
+    * @throws IllegalArgumentException ako je uneta vrednost manja od nule.
+    */
     public void setMarkaID(int markaID) {
     	if(markaID<0)
     		throw new IllegalArgumentException("MarkaID ne sme biti null");
@@ -95,24 +95,24 @@ public class Marka extends DomenskiObjekat implements Serializable{
     }
 
     /**
-     * Vraca string reprezentaciju marke automobila na osnovu atributa naziv.
-     * 
-     * @return naziv kao string reprezentacija marke automobila.
-     */
+    * Vraca string reprezentaciju marke automobila na osnovu atributa naziv.
+    * 
+    * @return naziv kao string reprezentacija marke automobila.
+    */
     @Override
     public String toString() {
         return this.naziv;
     }
 
     /**
-	 * Poredi dve marke automobila prema jedinstvenom identifikatoru.
-	 * 
-	 * @return
-	 * <ul>
-	 * 		<li> true ako su jedinstveni identifikatori isti </li>
-	 * 		<li> false ako je unet null, ako objekat nije klase Marka ili ako su razliciti identifikatori </li>
-	 * <ul>
-	 */
+    * Poredi dve marke automobila prema jedinstvenom identifikatoru.
+    * 
+    * @return
+    * <ul>
+    * 		<li> true ako su jedinstveni identifikatori isti </li>
+    * 		<li> false ako je unet null, ako objekat nije klase Marka ili ako su razliciti identifikatori </li>
+    * <ul>
+    */
     @Override
     public boolean equals(Object obj) {
         if(!(obj instanceof Marka))

@@ -5,14 +5,11 @@
 package rs.ac.bg.fon.ai.np.NPCommon.domain;
 
 import java.io.Serializable;
-import java.lang.System.Logger;
-import java.lang.System.Logger.Level;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,36 +18,40 @@ import java.util.List;
  * 
  * Nalog za servisiranje se odnosi na jedan uoceni kvar. Jedan uoceni kvar moze podrazumevati
  * vise pokvarenih delova. Npr: uoceni kvar: problemi sa motorom, pokvareni delovi: akumulator, svecice.
- * Ima jedinstven identifikator, datum servisiranja, cenu, podatak o tome na 
- * koji se kvar odnosi kao i koji serviser je zakljucio nalog.
+ * Ima jedinstven identifikator, datum servisiranja, datum izvrsavanja, status, cenu, podatak o tome na 
+ * koji se kvar odnosi kao i kom serviseru se dodeljuje nalog.
  *
  * @author Luka Obrenic
  * @since 1.0.0
  */
 public class NalogZaServisiranje extends DomenskiObjekat implements Serializable {
 
-	/**
-	 * Jedinstven identifikator naloga za servisiranje kao int.
-	 */
+    /**
+     * Jedinstven identifikator naloga za servisiranje kao int.
+     */
     private int nalogID;
     /**
-     * Datum servisiranja automobila tipa LocalDate.
+     * Datum kreiranja naloga, tipa {@link LocalDate}.
      */
     private LocalDate datumKreiranja;
-    
+    /**
+     * Datum izvrsenja naloga, tipa {@link LocalDate}.
+     */
     private LocalDate datumIzvrsenja;
-    
+    /**
+     * Stutus naloga, 0 ako je neizvrsen(default) i 1 ako je izvrsen kao short.
+     */
     private short status = 0; // po default-u je 0
     /**
      * Cena servisa kao double.
      */
     private double cena;
     /**
-     * Kvar na koji se odnosi nalog tipa UoceniKvar.
+     * Kvar na koji se odnosi nalog tipa {@link UoceniKvar}.
      */
     private UoceniKvar kvar;
     /**
-     * Serviser koji je zakljucio nalog kao instanca klase Serviser.
+     * Serviser kome se dodeljuje nalog kao instanca klase {@link Serviser}.
      */
     private Korisnik serviser;
 
@@ -66,7 +67,7 @@ public class NalogZaServisiranje extends DomenskiObjekat implements Serializable
      * @param datum - Datum servisiranja koji se dodeljuje instanci naloga pri kreiranju.
      * @param cena - Cena servisa koje se dodeljuje instanci naloga pri kreiranju.
      * @param kvar - Kvar na koji se odnosi servis, koji se dodeljuje instanci naloga pri kreiranju.
-     * @param serviser - Serviser koji obradjuje nalog, koji se dodeljuje instanci naloga pri kreiranju.
+     * @param serviser - Serviser koji izvrsava nalog, koji se dodeljuje instanci naloga pri kreiranju.
      */
     public NalogZaServisiranje(int nalogID, LocalDate datumKreiranja, 
          double cena, UoceniKvar kvar, Korisnik serviser) {
@@ -78,8 +79,8 @@ public class NalogZaServisiranje extends DomenskiObjekat implements Serializable
     }
     
     /**
-     * Vraca servisera koji je zakljucio nalog.
-     * @return serviser koji je zakljucio nalog tipa Serviser.
+     * Vraca servisera kojem je dodeljen nalog na izvrsavanje nalog.
+     * @return serviser koji izvrsava nalog tipa {@link Korisnik}.
      */
     public Korisnik getServiser() {
         return serviser;
@@ -100,7 +101,7 @@ public class NalogZaServisiranje extends DomenskiObjekat implements Serializable
 
     /**
      * Vraca kvar automobila na koji se nalog odnosi.
-     * @return kvar koji se odnosi na nalog tipa UoceniKvar.
+     * @return kvar koji se odnosi na nalog tipa {@link UoceniKvar}.
      */
     public UoceniKvar getKvar() {
         return kvar;
@@ -114,7 +115,7 @@ public class NalogZaServisiranje extends DomenskiObjekat implements Serializable
      */
     public void setKvar(UoceniKvar kvar) {
     	if(kvar == null)
-    		throw new NullPointerException("Kvar kod naloga ne sme biti null!");
+            throw new NullPointerException("Kvar kod naloga ne sme biti null!");
         this.kvar = kvar;
     }
 
@@ -139,33 +140,60 @@ public class NalogZaServisiranje extends DomenskiObjekat implements Serializable
         this.nalogID = nalogID;
     }
 
+    /**
+     * Vraca datum izvrsavanja naloga.
+     * @return datum izvrsavanja tipa {@link LocalDate}.
+     */
     public LocalDate getDatumIzvrsenja() {
         return datumIzvrsenja;
     }
-
+    
+    /**
+     * Postavlja novu vrednost za datum izvrsavanja naloga.
+     * 
+     * @param datum kao nova vrednost datuma izvrsavanja. Moze biti null ako nalog nije zavrsen.
+     * 
+     * @throws IllegalArgumentException ako se uneti datum odnosi na buducnost.
+     */
     public void setDatumIzvrsenja(LocalDate datumIzvrsenja) {
+        if(datumIzvrsenja.isAfter(LocalDate.now()))
+    		throw new IllegalArgumentException("Datum izvrsavanja naloga ne sme da bude u buducnosti!");
         this.datumIzvrsenja = datumIzvrsenja;
     }
 
+    /**
+     * Vraca status naloga (0 ako je nezavrsen ili 1 ako je zavrsen).
+     * @return status naloga, tipa {@link short}.
+     */
     public short getStatus() {
         return status;
     }
 
+    /**
+     * Postavlja novu vrednost statusa.
+     * 
+     * Moze biti iskljucivo 0 ili 1.
+     * 
+     * @param status status naloga, tipa {@link short}
+     * @throws IllegalArgumentException ako status nije 0 ni 1.
+     */
     public void setStatus(short status) {
+        if(status !=0 && status != 1)
+            throw new IllegalArgumentException("Status naloga moze da bude samo 0 ili 1!");
         this.status = status;
     }
     
 
     /**
-     * Vraca datum servisiranja tj datum kada je zakljucen(kreiran) nalog.
-     * @return datum servisiranja tipa LocalDate.
+     * Vraca datum kreiranja naloga.
+     * @return datum servisiranja tipa {@link LocalDate}.
      */
     public LocalDate getDatumKreiranja() {
         return datumKreiranja;
     }
 
     /**
-     * Postavlja novu vrednost za datum servisiranja.
+     * Postavlja novu vrednost za datum kreiranja.
      * 
      * @param datum kao nova vrednost datuma.
      * 
@@ -182,7 +210,7 @@ public class NalogZaServisiranje extends DomenskiObjekat implements Serializable
 
     /**
      * Vraca cenu servisa.
-     * @return cena servisa tipa kao double.
+     * @return cena servisa tipa {@link double}.
      */
     public double getCena() {
         return cena;
@@ -214,14 +242,14 @@ public class NalogZaServisiranje extends DomenskiObjekat implements Serializable
     ////
 
     /**
-	 * Poredi dva naloga za servisiranje prema jedinstvenom identifikatoru.
-	 * 
-	 * @return
-	 * <ul>
-	 * 		<li> true ako su identifikatori naloga isti </li>
-	 * 		<li> false ako je unet null, ako objekat nije klase NalogZaServisiranje ili ako su razliciti identifikatori </li>
-	 * <ul>
-	 */
+    * Poredi dva naloga za servisiranje prema jedinstvenom identifikatoru.
+    * 
+    * @return
+    * <ul>
+    * 		<li> true ako su identifikatori naloga isti </li>
+    * 		<li> false ako je unet null, ako objekat nije klase NalogZaServisiranje ili ako su razliciti identifikatori </li>
+    * <ul>
+    */
     @Override
     public boolean equals(Object obj) {
         if (obj == null) {

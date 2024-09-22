@@ -19,9 +19,9 @@ import java.util.List;
  * @since 1.0.0
  */
 public class UoceniKvar extends DomenskiObjekat implements Serializable{
-	/**
-	 * Automobil na kome je uocen kvar tipa Automobil.
-	 */
+    /**
+     * Automobil na kome je uocen kvar tipa {@link Automobil}.
+     */
     private Automobil automobil;
     /**
      * Jedinstveni identifikator kvara.
@@ -41,7 +41,7 @@ public class UoceniKvar extends DomenskiObjekat implements Serializable{
     /**
      * Parametrizovani konstruktor koji sluzi za kreiranje instance uocenog kvara sa specificnim vrednostima za njegove atribute.
      * 
-     * @param automobil - Automobil koji se dodeljuje instanci uocenog kvara pri kreiranju.
+     * @param automobil - Automobil koji se dodeljuje instanci uocenog kvara pri kreiranju, tipa {@link Automobil}.
      * @param kvarID - Jedinstveni indentifikator koji se dodeljuje instanci uocenog kvara pri kreiranju.
      * @param opis - Opis kvara koji se dodeljuje instanci uocenog kvara pri kreiranju.
      */
@@ -61,14 +61,14 @@ public class UoceniKvar extends DomenskiObjekat implements Serializable{
     }
 
     /**
-	 * Postavlja novu vrednost atributa opis.
-	 * 
-	 * Opis ne sme biti null niti prazan string.
-	 * 
-	 * @param opis nova vrednost za opis kvara
-	 * @throws NullPointerException ako se unese null vrednost
-	 * @throws IllegalArgumentException ako se unese prazan string
-	 */
+     * Postavlja novu vrednost atributa opis.
+     * 
+     * Opis ne sme biti null niti prazan string.
+     * 
+     * @param opis nova vrednost za opis kvara
+     * @throws NullPointerException ako se unese null vrednost
+     * @throws IllegalArgumentException ako se unese prazan string
+     */
     public void setOpis(String opis) {
     	if(opis == null)
     		throw new NullPointerException("Opis kvara ne sme biti null!");
@@ -79,23 +79,23 @@ public class UoceniKvar extends DomenskiObjekat implements Serializable{
 
     /**
      * Vraca automobil na kojem je uocen kvar.
-     * @return automobil na kojem je uocen kvar tipa Automobil.
+     * @return automobil na kojem je uocen kvar tipa {@link Automobil}.
      */
     public Automobil getAutomobil() {
         return automobil;
     }
 
     /**
-	 * Postavlja novu vrednost atributa automobil.
-	 * 
-	 * Automobil ne sme biti null.
-	 * 
-	 * @param automobil nova vrednost za automobil
-	 * @throws NullPointerException ako se unese null vrednost
-	 */
+     * Postavlja novu vrednost atributa automobil.
+     * 
+     * Automobil ne sme biti null.
+     * 
+     * @param automobil nova vrednost za automobil
+     * @throws NullPointerException ako se unese null vrednost
+     */
     public void setAutomobil(Automobil automobil) {
     	if(automobil==null)
-    		throw new NullPointerException("Automobil kod uocenog kvara ne sme biti null!");
+            throw new NullPointerException("Automobil kod uocenog kvara ne sme biti null!");
         this.automobil = automobil;
     }
 
@@ -133,16 +133,16 @@ public class UoceniKvar extends DomenskiObjekat implements Serializable{
     }
 
     /**
-	 * Poredi dva uocena kvara prema automobilu i jedinstvenom identifikatoru kvara.
-	 * 
-	 * Poziva se equals metoda klase Automobil.
-	 * 
-	 * @return
-	 * <ul>
-	 * 		<li> true ako su automobil i jedinstveni identifikator kvara isti </li>
-	 * 		<li> false ako je unet null, ako objekat nije klase UoceniKvar ili ako su razliciti automobil i/ili jedinstveni identifikator kvara</li>
-	 * <ul>
-	 */
+     * Poredi dva uocena kvara prema automobilu i jedinstvenom identifikatoru kvara.
+     * 
+     * Poziva se equals metoda klase Automobil.
+     * 
+     * @return
+     * <ul>
+     * 		<li> true ako su automobil i jedinstveni identifikator kvara isti </li>
+     * 		<li> false ako je unet null, ako objekat nije klase UoceniKvar ili ako su razliciti automobil i/ili jedinstveni identifikator kvara</li>
+     * <ul>
+     */
     @Override
     public boolean equals(Object obj) {
     	if(obj == null)

@@ -20,15 +20,15 @@ import java.sql.ResultSet;
  */
 public abstract class DomenskiObjekat {
 
-	/**
-	 * Vraca naziv tabele u bazi.
-	 * @return naziv tabele kao string.
-	 */
+    /**
+     * Vraca naziv tabele u bazi.
+     * @return naziv tabele kao string.
+     */
     public abstract String vratiNazivTabele();
     /**
-	 * Vraca nazive kolona za operaciju INSERT u SQL upitu.
-	 * @return nazivi kolona kao string.
-	 */
+    * Vraca nazive kolona za operaciju INSERT u SQL upitu.
+    * @return nazivi kolona kao string.
+    */
     public abstract String getKoloneZaInsert();
     /**
      * Vraca vrednosti koje treba ubaciti u bazu (nakon VALUES klauzule u SQL upitu).

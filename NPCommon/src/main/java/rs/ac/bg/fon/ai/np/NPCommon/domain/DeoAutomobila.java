@@ -5,8 +5,6 @@
 package rs.ac.bg.fon.ai.np.NPCommon.domain;
 
 import java.io.Serializable;
-import java.lang.System.Logger;
-import java.lang.System.Logger.Level;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -22,9 +20,9 @@ import java.util.List;
  * @since 1.0.0
  */
 public class DeoAutomobila extends DomenskiObjekat implements Serializable{
-	/**
-	 * Jedinstven identifikator dela automobila kao int.
-	 */
+    /**
+     * Jedinstven identifikator dela automobila kao int.
+     */
     private int deoID;
     /**
      * Naziv dela automobila kao string.
@@ -90,7 +88,7 @@ public class DeoAutomobila extends DomenskiObjekat implements Serializable{
      */
     public void setDeoID(int deoID) {
     	if(deoID < 0)
-    		throw new IllegalArgumentException("DeoID ne sme biti < 0");
+            throw new IllegalArgumentException("DeoID ne sme biti < 0");
         this.deoID = deoID;
     }
 

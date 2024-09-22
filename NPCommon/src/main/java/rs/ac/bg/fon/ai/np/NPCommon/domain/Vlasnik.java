@@ -21,9 +21,9 @@ import java.util.List;
  */
 public class Vlasnik extends DomenskiObjekat implements Serializable {
 
-	/**
-	 * Jedinstven idefntifikator vlasnika automobila kao int.
-	 */
+    /**
+     * Jedinstven idefntifikator vlasnika automobila kao int.
+     */
     private int vlasnikID;
     /**
      * Ime vlasnika kao string.
@@ -204,7 +204,7 @@ public class Vlasnik extends DomenskiObjekat implements Serializable {
      */
     @Override
     public String toString() {
-        return this.ime + " " + this.prezime + ", " + this.email;
+        return this.ime + " " + this.prezime + ", " + this.email + ", "+this.telefon;
     }
 
     /**

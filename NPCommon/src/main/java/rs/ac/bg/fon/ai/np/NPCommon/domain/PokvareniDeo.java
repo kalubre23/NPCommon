@@ -19,14 +19,17 @@ import java.util.logging.Logger;
  * Sastoji se od jednog uocenog kvara za automobil i dela automobila kome je potreban servis. 
  * Takodje sadrzi cenu popravke.
  *
+ * @see UoceniKvar
+ * @see Automobil
+ * @see DeoAutomobila
  * @author Luka Obrenic
  * @since 1.0.0
  */
 public class PokvareniDeo extends DomenskiObjekat implements Serializable {
 
-	/**
-	 * Uoceni kvar automobila tipa UoceniKvar.
-	 */
+    /**
+     * Uoceni kvar automobila tipa UoceniKvar.
+     */
     private UoceniKvar uoceniKvar;
     /**
      * Deo automobila tipa DeoAutomobila.
@@ -93,13 +96,13 @@ public class PokvareniDeo extends DomenskiObjekat implements Serializable {
      */
     public void setCena(double cena) {
     	if(cena<0)
-    		throw new IllegalArgumentException("Cena pokvarenog dela ne sme biti < 0");
+            throw new IllegalArgumentException("Cena pokvarenog dela ne sme biti < 0");
         this.cena = cena;
     }
 
     /**
      * Vraca kvar automobila na koji se odnosi pokvareni deo.
-     * @return uoceniKvar na koji se odnosi pokvaren deo tipa UoceniKvar.
+     * @return uoceniKvar na koji se odnosi pokvaren deo tipa {@link UoceniKvar}.
      */
     public UoceniKvar getUoceniKvar() {
         return uoceniKvar;
@@ -113,7 +116,7 @@ public class PokvareniDeo extends DomenskiObjekat implements Serializable {
      */
     public void setUoceniKvar(UoceniKvar uoceniKvar) {
     	if(uoceniKvar == null)
-    		throw new NullPointerException("Uoceni kvar za pokvareni deo ne sme biti null!");
+            throw new NullPointerException("Uoceni kvar za pokvareni deo ne sme biti null!");
     	
         this.uoceniKvar = uoceniKvar;
     }
@@ -134,7 +137,7 @@ public class PokvareniDeo extends DomenskiObjekat implements Serializable {
      */
     public void setDeo(DeoAutomobila deo) {
     	if(deo == null)
-    		throw new NullPointerException("Deo automobila kod pokvarenog dela ne sme biti null!");
+            throw new NullPointerException("Deo automobila kod pokvarenog dela ne sme biti null!");
         this.deo = deo;
     }
 
