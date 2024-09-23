@@ -79,12 +79,41 @@ public class Uloga implements Serializable{
      * @throws NullPointerException ako je uneta null vrednost kao parametar.
      */
     public void setUloga(String uloga) {
+        if(uloga==null)
+            throw new NullPointerException("Naziv uloge ne sme biti null!");
+        if(!(uloga.equals("admin") || uloga.equals("serviser")))
+            throw new IllegalArgumentException("Naziv uloge mora biti 'admin' ili 'seviser'!");
         this.uloga = uloga;
     }
 
+    /**
+    * Vraca string reprezentaciju uloge na osnovu atributa uloga koji predstavlja naziv uloge.
+    * 
+    * @return uloga naziv uloge.
+    */
     @Override
     public String toString() {
         return this.uloga;
     }
+
+    /**
+    * Poredi dve uloge prema jedinstvenom identifikatoru.
+    * 
+    * @return
+    * <ul>
+    * 		<li> true ako su jedinstveni identifikatori isti </li>
+    * 		<li> false ako je unet null, ako objekat nije klase Uloga ili ako su razliciti identifikatori </li>
+    * <ul>
+    */
+    @Override
+    public boolean equals(Object obj) {
+        if(!(obj instanceof Uloga))
+            return false;
+       
+        Uloga other =(Uloga)obj;
+        return other.getUlogaId()== this.ulogaId;
+    }
+    
+    
     
 }

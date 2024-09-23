@@ -68,6 +68,8 @@ public class Korisnik extends DomenskiObjekat implements Serializable {
     * @throws NullPointerException ako se unese null vrednost
     */
     public void setUloga(Uloga uloga) {
+        if(uloga==null)
+            throw new NullPointerException("Uloga ne sme biti null!");
         this.uloga = uloga;
     }
 
