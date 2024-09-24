@@ -156,8 +156,12 @@ public class NalogZaServisiranje extends DomenskiObjekat implements Serializable
      * @throws IllegalArgumentException ako se uneti datum odnosi na buducnost.
      */
     public void setDatumIzvrsenja(LocalDate datumIzvrsenja) {
+        if(datumIzvrsenja==null){
+            this.datumIzvrsenja = null;
+            return;
+        }
         if(datumIzvrsenja.isAfter(LocalDate.now()))
-    		throw new IllegalArgumentException("Datum izvrsavanja naloga ne sme da bude u buducnosti!");
+            throw new IllegalArgumentException("Datum izvrsavanja naloga ne sme da bude u buducnosti!");
         this.datumIzvrsenja = datumIzvrsenja;
     }
 
@@ -317,7 +321,7 @@ public class NalogZaServisiranje extends DomenskiObjekat implements Serializable
                 Vlasnik vlasnik = new Vlasnik(rs.getInt("a.vlasnikid"), rs.getString("v.ime"), rs.getString("v.prezime"), rs.getString("v.email"), rs.getString("v.telefon"));
                 Automobil automobil = new Automobil(rs.getString("n.tablice"), vlasnik, rs.getInt("a.godiste"), marka, new ArrayList<>());
                 UoceniKvar uk = new UoceniKvar(automobil, rs.getInt("n.kvarid"), rs.getString("uk.opis"));
-                Korisnik s = new Korisnik(rs.getInt("n.serviserid"), rs.getString("k.ime"), rs.getString("k.prezime"), rs.getString("k.username"), "not available", null);
+                Korisnik s = new Korisnik(rs.getInt("n.serviserid"), rs.getString("k.ime"), rs.getString("k.prezime"), rs.getString("k.username"), "not available", new Uloga(2, "serviser"));
                 NalogZaServisiranje nalog = new NalogZaServisiranje(rs.getInt("nalogid"), rs.getDate("datum_kreiranja").toLocalDate(), rs.getDouble("cena"), uk, s);
                 Date datummIzvrsenja = rs.getDate("datum_izvrsenja");
                 nalog.setStatus((short) rs.getInt("status"));
