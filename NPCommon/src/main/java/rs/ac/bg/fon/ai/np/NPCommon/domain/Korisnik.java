@@ -49,7 +49,34 @@ public class Korisnik extends DomenskiObjekat implements Serializable {
      * @see Uloga
      */
     private Uloga uloga;
+    
+    /**
+     * Email korisnika, tipa String.
+     */
+    private String email;
 
+    /**
+     * Vraca email korisnika.
+     * @return email korisnika, tipa String.
+     */
+    public String getEmail() {
+        return email;
+    }
+
+    /**
+     * Postavlja email korisnika.
+     * @param email email korisnika kao string.
+     */
+    public void setEmail(String email) {
+        if(email==null){
+            throw new NullPointerException("Email korisnika ne sme biti null!");
+        }
+        if(email.isBlank()){
+            throw new IllegalArgumentException("Email korisnika ne sme biti prazan string!");
+        }
+        this.email = email;
+    }
+    
     /**
      * Vraca ulogu korisnika.
      * @return uloga korisnika, tipa Uloga.
@@ -89,13 +116,14 @@ public class Korisnik extends DomenskiObjekat implements Serializable {
      * @param password - Password koje se dodeljuje instanci korisnika pri kreiranju.
      */
     public Korisnik(int korisnikId, String ime, String prezime,
-         String username, String password, Uloga uloga) {
+         String username, String password, Uloga uloga, String email) {
         setKorisnikID(korisnikId);
         setIme(ime);
         setPrezime(prezime);
         setUsername(username);
         setPassword(password);
         setUloga(uloga);
+        setEmail(email);
     }
 
     /**
@@ -291,7 +319,7 @@ public class Korisnik extends DomenskiObjekat implements Serializable {
 
     @Override
     public String vratiVrednostiZaSelect() {
-        return "korisnik_id, ime, prezime, username, uloge.uloga_id, uloge.naziv";
+        return "korisnik_id, ime, prezime, username, uloge.uloga_id, uloge.naziv, email";
     }
 
     @Override
@@ -310,6 +338,7 @@ public class Korisnik extends DomenskiObjekat implements Serializable {
                 k.setUsername(rs.getString(4));
                 Uloga u = new Uloga(rs.getInt(5), rs.getString(6));
                 k.setUloga(u);
+                k.setEmail(rs.getString(7));
                 serviseri.add(k);
             }
             return serviseri;

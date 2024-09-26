@@ -288,7 +288,7 @@ public class NalogZaServisiranje extends DomenskiObjekat implements Serializable
 
     @Override
     public String vratiVrednostiZaSelect() {
-        return "nalogid, datum_kreiranja, datum_izvrsenja, cena, status, n.tablice, a.vlasnikid, v.ime, v.prezime, v.email, v.telefon, a.godiste, a.markaid, m.naziv, n.kvarid, uk.opis, n.serviserid, k.ime, k.prezime, k.username";
+        return "nalogid, datum_kreiranja, datum_izvrsenja, cena, status, n.tablice, a.vlasnikid, v.ime, v.prezime, v.email, v.telefon, a.godiste, a.markaid, m.naziv, n.kvarid, uk.opis, n.serviserid, k.ime, k.prezime, k.username, k.email";
     }
 
     @Override
@@ -321,7 +321,7 @@ public class NalogZaServisiranje extends DomenskiObjekat implements Serializable
                 Vlasnik vlasnik = new Vlasnik(rs.getInt("a.vlasnikid"), rs.getString("v.ime"), rs.getString("v.prezime"), rs.getString("v.email"), rs.getString("v.telefon"));
                 Automobil automobil = new Automobil(rs.getString("n.tablice"), vlasnik, rs.getInt("a.godiste"), marka, new ArrayList<>());
                 UoceniKvar uk = new UoceniKvar(automobil, rs.getInt("n.kvarid"), rs.getString("uk.opis"));
-                Korisnik s = new Korisnik(rs.getInt("n.serviserid"), rs.getString("k.ime"), rs.getString("k.prezime"), rs.getString("k.username"), "not available", new Uloga(2, "serviser"));
+                Korisnik s = new Korisnik(rs.getInt("n.serviserid"), rs.getString("k.ime"), rs.getString("k.prezime"), rs.getString("k.username"), "not available", new Uloga(2, "serviser"), rs.getString("k.email"));
                 NalogZaServisiranje nalog = new NalogZaServisiranje(rs.getInt("nalogid"), rs.getDate("datum_kreiranja").toLocalDate(), rs.getDouble("cena"), uk, s);
                 Date datummIzvrsenja = rs.getDate("datum_izvrsenja");
                 nalog.setStatus((short) rs.getInt("status"));
